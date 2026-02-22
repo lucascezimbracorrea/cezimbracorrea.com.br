@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cezimbra Corrêa | IA & Engenharia de Software | Automação e SaaS</title>
+    <meta name="description" content="Engenheiro de Software Senior & DevOps com +10 anos. Soluções com IA: Agentes WhatsApp, WebChat, SEO automatizado. Consultoria em Cloud, DevOps e arquitetura escalável. Novo Hamburgo, RS.">
+    <meta name="keywords" content="IA, inteligência artificial, engenharia de software, DevOps, SaaS, chatbot WhatsApp, automação, consultoria tech, Novo Hamburgo">
+    <meta name="author" content="Lucas Cezimbra Corrêa">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://cezimbracorrea.com.br/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cezimbracorrea.com.br/">
+    <meta property="og:title" content="Cezimbra Corrêa | IA & Engenharia de Software">
+    <meta property="og:description" content="Soluções com IA e consultoria em engenharia de software. Agentes WhatsApp, WebChat, SEO. +10 anos de experiência.">
+    <meta property="og:image" content="https://cezimbracorrea.com.br/me.jpeg">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Cezimbra Corrêa">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://cezimbracorrea.com.br/">
+    <meta name="twitter:title" content="Cezimbra Corrêa | IA & Engenharia de Software">
+    <meta name="twitter:description" content="Soluções com IA e consultoria em engenharia de software. Agentes WhatsApp, WebChat, SEO. +10 anos de experiência.">
+    <meta name="twitter:image" content="https://cezimbracorrea.com.br/me.jpeg">
+    
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Background Grid Animation */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .glass {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tech-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Scanline effect */
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(59, 130, 246, 0.1);
+            position: absolute;
+            z-index: 10;
+            top: 0;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        .floating-wa {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Novas animações para scroll e marquee */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .marquee-container {
+            display: flex;
+            width: 200%;
+            animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .timeline-line {
+            background: linear-gradient(180deg, rgba(59,130,246,0) 0%, rgba(59,130,246,0.5) 15%, rgba(139,92,246,0.5) 85%, rgba(139,92,246,0) 100%);
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Cezimbra Corrêa",
+        "description": "Engenheiro de Software Senior & DevOps. Soluções com IA: Agentes WhatsApp, WebChat, SEO automatizado. Consultoria em Cloud e arquitetura escalável.",
+        "url": "https://cezimbracorrea.com.br",
+        "image": "https://cezimbracorrea.com.br/me.jpeg",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Novo Hamburgo",
+            "addressRegion": "RS",
+            "addressCountry": "BR"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+55-51-98533-9623",
+            "contactType": "customer service",
+            "areaServed": "BR",
+            "availableLanguage": ["Portuguese", "English"]
+        },
+        "sameAs": [
+            "https://www.linkedin.com/in/lucascezimbracorrea/",
+            "https://github.com/lucascezimbracorrea"
+        ]
+    }
+    </script>
+</head>
+<body class="selection:bg-blue-500 selection:text-white">
+    <canvas id="canvas-bg"></canvas>
+    <div class="scanline"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass rounded-2xl px-6 py-3">
+            <div class="flex items-center gap-3">
+                <div class="flex -space-x-3">
+                    <div class="w-10 h-10 bg-[#3b82f6] rounded-[0.4rem] flex items-center justify-center font-extrabold text-white text-xl z-10 shadow-lg">C</div>
+                    <div class="w-10 h-10 bg-[#8b5cf6] rounded-[0.4rem] flex items-center justify-center font-extrabold text-white text-xl shadow-lg">C</div>
+                </div>
+                <span class="font-bold tracking-tighter text-xl uppercase mt-1">CEZIMBRA<span class="text-[#3b82f6]">CORRÊA</span></span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#home" class="hover:text-blue-400 transition" data-pt="Início" data-en="Home">Início</a>
+                <a href="#products" class="hover:text-blue-400 transition" data-pt="SaaS & IA" data-en="SaaS & AI">SaaS & IA</a>
+                <a href="#services" class="hover:text-blue-400 transition" data-pt="Serviços" data-en="Services">Serviços</a>
+                <a href="#about" class="hover:text-blue-400 transition" data-pt="Sobre" data-en="About">Sobre</a>
+            </div>
+
+            <button id="menu-toggle" class="md:hidden p-2 rounded-lg hover:bg-gray-800 transition" aria-label="Menu" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+            </button>
+
+            <div class="hidden md:flex items-center gap-4">
+                <button onclick="toggleLang()" class="mono text-xs border border-gray-700 px-2 py-1 rounded hover:bg-gray-800 transition">
+                    <span id="lang-label">EN</span>
+                </button>
+                <a href="https://wa.me/5551985339623" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2">
+                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                    <span data-pt="Contato" data-en="Contact">Contato</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 md:hidden hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="toggleMobileMenu()"></div>
+        <div class="absolute top-0 right-0 w-72 h-full glass border-l border-white/10 p-6 pt-24 flex flex-col gap-4">
+            <a href="#home" class="text-lg font-medium hover:text-blue-400 transition py-2" data-pt="Início" data-en="Home" onclick="toggleMobileMenu()">Início</a>
+            <a href="#products" class="text-lg font-medium hover:text-blue-400 transition py-2" data-pt="SaaS & IA" data-en="SaaS & AI" onclick="toggleMobileMenu()">SaaS & IA</a>
+            <a href="#services" class="text-lg font-medium hover:text-blue-400 transition py-2" data-pt="Serviços" data-en="Services" onclick="toggleMobileMenu()">Serviços</a>
+            <a href="#about" class="text-lg font-medium hover:text-blue-400 transition py-2" data-pt="Sobre" data-en="About" onclick="toggleMobileMenu()">Sobre</a>
+            <a href="https://wa.me/5551985339623" target="_blank" rel="noopener noreferrer" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl font-bold flex items-center gap-2 justify-center">
+                <i data-lucide="message-square" class="w-5 h-5"></i>
+                <span data-pt="Contato" data-en="Contact">Contato</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen pt-32 pb-20 px-6 flex flex-col items-center justify-center text-center">
+        <div class="relative mb-8">
+            <div class="absolute inset-0 bg-blue-500 blur-3xl opacity-20 rounded-full"></div>
+            <img src="me.jpeg" alt="Lucas Cezimbra Corrêa - Engenheiro de Software e Especialista em IA" width="160" height="160" class="relative w-40 h-40 object-cover rounded-2xl border-2 border-blue-500/50 grayscale hover:grayscale-0 transition-all duration-500 shadow-2xl" fetchpriority="high">
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+            <span data-pt="Construindo o Futuro com" data-en="Building the Future with">Construindo o Futuro com</span><br/>
+            <span class="gradient-text">Inteligência Artificial</span>
+        </h1>
+        
+        <p class="max-w-2xl text-gray-400 text-lg md:text-xl mb-10 leading-relaxed" 
+           data-pt="Engenheiro de Software Senior & DevOps com +10 anos de experiência transformando ideias complexas em produtos escaláveis de alta performance."
+           data-en="Senior Software Engineer & DevOps with 10+ years of experience transforming complex ideas into high-performance scalable products.">
+           Engenheiro de Software Senior & DevOps com +10 anos de experiência transformando ideias complexas em produtos escaláveis de alta performance.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="#products" class="px-8 py-4 bg-white text-black font-bold rounded-2xl hover:bg-blue-500 hover:text-white transition-all flex items-center gap-2">
+                <span data-pt="Ver Produtos IA" data-en="Explore AI Products">Ver Produtos IA</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/lucascezimbracorrea/" target="_blank" rel="noopener noreferrer" class="px-8 py-4 glass font-bold rounded-2xl hover:bg-gray-800 transition-all flex items-center gap-2">
+                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                LinkedIn
+            </a>
+        </div>
+    </section>
+
+    <!-- Social Proof / Trusted By -->
+    <div class="w-full border-y border-white/5 bg-gray-900/30 py-8 overflow-hidden relative">
+        <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#030712] to-transparent z-10"></div>
+        <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#030712] to-transparent z-10"></div>
+        
+        <div class="marquee-container flex items-center gap-16 md:gap-24 px-4 w-max">
+            <!-- Set 1 -->
+            <div class="flex items-center gap-16 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="shield-check" class="text-blue-500"></i> White Prompt</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="box" class="text-purple-500"></i> Box360</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="triangle" class="text-blue-400"></i> Z3</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="code-2" class="text-green-500"></i> BairesDev</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="hexagon" class="text-pink-500"></i> One</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="activity" class="text-yellow-500"></i> XChange Place</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="zap" class="text-orange-500"></i> Vela</span>
+            </div>
+            <!-- Set 2 (Clone for infinite scroll) -->
+            <div class="flex items-center gap-16 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="shield-check" class="text-blue-500"></i> White Prompt</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="box" class="text-purple-500"></i> Box360</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="triangle" class="text-blue-400"></i> Z3</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="code-2" class="text-green-500"></i> BairesDev</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="hexagon" class="text-pink-500"></i> One</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="activity" class="text-yellow-500"></i> XChange Place</span>
+                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="zap" class="text-orange-500"></i> Vela</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI SaaS Products -->
+    <section id="products" class="py-24 px-6 bg-gray-900/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold mb-4" data-pt="Soluções SaaS com IA" data-en="AI SaaS Solutions">Soluções SaaS com IA</h2>
+                <div class="h-1 w-20 bg-blue-600 rounded"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Product 1 -->
+                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
+                    <div class="w-12 h-12 bg-green-500/20 text-green-400 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="bot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-pt="Agente com IA para WhatsApp" data-en="AI Agent for WhatsApp">Agente com IA para WhatsApp</h3>
+                    <p class="text-gray-400 text-sm mb-6" 
+                       data-pt="Atendimento 24/7 com IA integrada (GPT-4) que entende o contexto do seu negócio e converte leads automaticamente."
+                       data-en="24/7 customer service with integrated AI (GPT-4) that understands your business context and converts leads automatically.">
+                       Atendimento 24/7 com IA integrada (GPT-4) que entende o contexto do seu negócio e converte leads automaticamente.
+                    </p>
+                    <button onclick="window.location.href='https://wa.me/5551985339623?text=Quero+saber+mais+sobre+o+Agente+com+IA+para+WhatsApp'" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
+                        <span data-pt="Solicitar Demo" data-en="Request Demo">Solicitar Demo</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
+                    <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="phone-call"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-pt="Agente com IA por chamada" data-en="AI Voice Agent">Agente com IA por chamada</h3>
+                    <p class="text-gray-400 text-sm mb-6" 
+                       data-pt="Sistema automatizado de chamadas de voz via WhatsApp para lembretes de consultas, cobranças e validações em massa."
+                       data-en="Automated voice call system via WhatsApp for appointment reminders, billing, and bulk validations.">
+                       Sistema automatizado de chamadas de voz via WhatsApp para lembretes de consultas, cobranças e validações em massa.
+                    </p>
+                    <button onclick="window.location.href='https://wa.me/5551985339623?text=Quero+saber+mais+sobre+o+Agente+com+IA+por+chamada'" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
+                        <span data-pt="Ver mais" data-en="Learn More">Ver mais</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
+                    <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="megaphone"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-pt="AI SEO Automation" data-en="AI SEO Automation">AI SEO Automation</h3>
+                    <p class="text-gray-400 text-sm mb-6" 
+                       data-pt="Geração de conteúdo otimizado para buscadores e análise de palavras-chave competitivas usando modelos de linguagem avançados."
+                       data-en="SEO-optimized content generation and competitive keyword analysis using advanced language models.">
+                       Geração de conteúdo otimizado para buscadores e análise de palavras-chave competitivas usando modelos de linguagem avançados.
+                    </p>
+                    <button onclick="window.location.href='https://wa.me/5551985339623?text=Quero+saber+mais+sobre+SEO+com+IA'" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
+                        <span data-pt="Otimizar meu site" data-en="Optimize my site">Otimizar meu site</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
+                    <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="message-square-dashed"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3" data-pt="Agente com IA para WebChat" data-en="AI Agent for WebChat">Agente com IA para WebChat</h3>
+                    <p class="text-gray-400 text-sm mb-6" 
+                       data-pt="Chatbot inteligente embutido no seu site. Responde dúvidas em tempo real, captura leads e faz triagem 24/7 de forma humanizada."
+                       data-en="Smart chatbot embedded in your website. Answers questions in real-time, captures leads, and performs humanized triage 24/7.">
+                       Chatbot inteligente embutido no seu site. Responde dúvidas em tempo real, captura leads e faz triagem 24/7 de forma humanizada.
+                    </p>
+                    <button onclick="window.location.href='https://wa.me/5551985339623?text=Quero+saber+mais+sobre+o+Agente+com+IA+para+WebChat'" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
+                        <span data-pt="Quero no meu site" data-en="Get it for my site">Quero no meu site</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4" data-pt="Especialidades & Consultoria" data-en="Expertise & Consulting">Especialidades & Consultoria</h2>
+                <p class="text-gray-400" data-pt="Soluções sob medida para empresas que buscam excelência técnica." data-en="Tailored solutions for companies seeking technical excellence.">Soluções sob medida para empresas que buscam excelência técnica.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <i data-lucide="code-2" class="text-blue-500 mb-4"></i>
+                    <span class="font-bold text-sm">Dev Full-Stack</span>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <i data-lucide="cloud" class="text-blue-500 mb-4"></i>
+                    <span class="font-bold text-sm" data-pt="Cloud & DevOps" data-en="Cloud & DevOps">Cloud & DevOps</span>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <i data-lucide="layers" class="text-blue-500 mb-4"></i>
+                    <span class="font-bold text-sm" data-pt="Arq. Software" data-en="SW Architecture">Arq. Software</span>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <i data-lucide="layout-grid" class="text-blue-500 mb-4"></i>
+                    <span class="font-bold text-sm">CRM / ERP</span>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <i data-lucide="users" class="text-blue-500 mb-4"></i>
+                    <span class="font-bold text-sm" data-pt="Ouvidoria" data-en="Ombudsman">Ouvidoria</span>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <i data-lucide="shopping-cart" class="text-blue-500 mb-4"></i>
+                    <span class="font-bold text-sm">E-commerce</span>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <i data-lucide="zap" class="text-blue-500 mb-4"></i>
+                    <span class="font-bold text-sm" data-pt="Landing Pages" data-en="Landing Pages">Landing Pages</span>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <i data-lucide="shield-check" class="text-blue-500 mb-4"></i>
+                    <span class="font-bold text-sm" data-pt="SaaS Delivery" data-en="SaaS Delivery">SaaS Delivery</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Timeline -->
+    <section id="about" class="py-24 px-6 bg-gradient-to-b from-transparent via-blue-900/10 to-transparent relative overflow-hidden">
+        <div class="max-w-5xl mx-auto relative">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl font-bold mb-4" data-pt="Histórico de Entregas e Resultados" data-en="Track Record & Results">Histórico de Entregas e Resultados</h2>
+                <p class="text-gray-400" data-pt="10+ anos escalando plataformas e otimizando infraestruturas críticas." data-en="10+ years scaling platforms and optimizing critical infrastructures.">10+ anos escalando plataformas e otimizando infraestruturas críticas.</p>
+            </div>
+
+            <!-- Timeline Container -->
+            <div class="relative w-full">
+                <!-- Center Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 timeline-line transform md:-translate-x-1/2 rounded-full"></div>
+
+                <!-- Node 1 -->
+                <div class="relative flex flex-col md:flex-row justify-between items-center mb-20 reveal w-full">
+                    <div class="w-full md:w-[45%] pl-12 md:pl-0 md:text-right mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold text-blue-400 mb-2" data-pt="Escalabilidade & Investimentos" data-en="Scalability & Investments">Escalabilidade & Investimentos</h3>
+                        <p class="font-mono text-xs text-purple-400 mb-4">XChange Place | White Prompt</p>
+                        <p class="text-gray-400 text-sm leading-relaxed" data-pt="Engenharia full-stack e DevOps (AWS, ECS, Lambdas) em app internacional de investimentos. Arquitetura voltada para alta disponibilidade e segurança." data-en="Full-stack and DevOps engineering (AWS, ECS, Lambdas) for an international investment app. Architecture focused on high availability and security.">
+                            Engenharia full-stack e DevOps (AWS, ECS, Lambdas) em app internacional de investimentos. Arquitetura voltada para alta disponibilidade e segurança.
+                        </p>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-blue-500 rounded-full border-4 border-[#030712] transform -translate-x-1/2 md:-translate-x-1/2 shadow-[0_0_15px_#3b82f6]"></div>
+                    <div class="w-full md:w-[45%] pl-12 md:pl-0 text-left">
+                        <div class="glass p-6 rounded-2xl border-l-4 border-blue-500 hover:scale-105 transition-transform">
+                            <h4 class="text-3xl font-extrabold text-white mb-1">Global</h4>
+                            <p class="text-sm text-gray-400 font-bold" data-pt="Deployments sem downtime (CI/CD)" data-en="Zero-downtime deployments (CI/CD)">Deployments sem downtime (CI/CD)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Node 2 -->
+                <div class="relative flex flex-col md:flex-row-reverse justify-between items-center mb-20 reveal w-full">
+                    <div class="w-full md:w-[45%] pl-12 md:pl-0 md:text-left mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold text-purple-400 mb-2" data-pt="Modernização & Performance" data-en="Modernization & Performance">Modernização & Performance</h3>
+                        <p class="font-mono text-xs text-blue-400 mb-4">Z3 | BairesDev</p>
+                        <p class="text-gray-400 text-sm leading-relaxed" data-pt="Liderança na migração de legados para React e Ruby on Rails/Django. Melhoria drástica de UX/UI e criação de APIs RESTful altamente testadas." data-en="Led legacy migrations to React and Ruby on Rails/Django. Drastic UX/UI improvement and creation of highly tested RESTful APIs.">
+                            Liderança na migração de legados para React e Ruby on Rails/Django. Melhoria drástica de UX/UI e criação de APIs RESTful altamente testadas.
+                        </p>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-purple-500 rounded-full border-4 border-[#030712] transform -translate-x-1/2 md:-translate-x-1/2 shadow-[0_0_15px_#8b5cf6]"></div>
+                    <div class="w-full md:w-[45%] pl-12 md:pl-0 md:text-right">
+                        <div class="glass p-6 rounded-2xl border-r-4 md:border-l-0 border-l-4 border-purple-500 hover:scale-105 transition-transform">
+                            <h4 class="text-3xl font-extrabold text-white mb-1">+1M</h4>
+                            <p class="text-sm text-gray-400 font-bold" data-pt="Usuários suportados com 100% de testes" data-en="Users supported with 100% test coverage">Usuários suportados com 100% de testes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Node 3 -->
+                <div class="relative flex flex-col md:flex-row justify-between items-center mb-10 reveal w-full">
+                    <div class="w-full md:w-[45%] pl-12 md:pl-0 md:text-right mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold text-pink-500 mb-2" data-pt="Alta Volumetria & Mensageria" data-en="High Volume & Messaging">Alta Volumetria & Mensageria</h3>
+                        <p class="font-mono text-xs text-pink-400 mb-4">Box360 | One</p>
+                        <p class="text-gray-400 text-sm leading-relaxed" data-pt="Co-fundador e Arquiteto de plataforma inteligente de mensagens (WhatsApp/SMS/Bots) e sistemas de CRM para o setor de telecom." data-en="Co-founder and Architect of a smart messaging platform (WhatsApp/SMS/Bots) and CRM systems for the telecom sector.">
+                            Co-fundador e Arquiteto de plataforma inteligente de mensagens (WhatsApp/SMS/Bots) e sistemas de CRM para o setor de telecom.
+                        </p>
+                    </div>
+                    <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-pink-500 rounded-full border-4 border-[#030712] transform -translate-x-1/2 md:-translate-x-1/2 shadow-[0_0_15px_#ec4899]"></div>
+                    <div class="w-full md:w-[45%] pl-12 md:pl-0 text-left">
+                        <div class="glass p-6 rounded-2xl border-l-4 border-pink-500 hover:scale-105 transition-transform">
+                            <h4 class="text-3xl font-extrabold text-white mb-1">100k+</h4>
+                            <p class="text-sm text-gray-400 font-bold" data-pt="Mensagens processadas diariamente" data-en="Messages processed daily">Mensagens processadas diariamente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Timeline -->
+            <div class="text-center mt-16 reveal">
+                <a href="https://wa.me/5551985339623?text=Quero+escalar+minha+operacao+com+tecnologia" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-purple-500/25 transition-all hover:scale-105">
+                    <i data-lucide="rocket" class="w-5 h-5"></i>
+                    <span data-pt="Quero escalar minha operação" data-en="I want to scale my operation">Quero escalar minha operação</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews / Testimonials -->
+    <section class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-bold mb-4" data-pt="O que dizem sobre meu trabalho" data-en="What people say about my work">O que dizem sobre meu trabalho</h2>
+                <div class="h-1 w-20 bg-purple-600 rounded mx-auto mb-4"></div>
+                <p class="text-gray-400" data-pt="Feedback de parceiros, líderes e colegas de equipe." data-en="Feedback from partners, leaders, and teammates.">Feedback de parceiros, líderes e colegas de equipe.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Review 1 -->
+                <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform">
+                    <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-blue-900/50 rounded-full flex items-center justify-center font-bold text-blue-400 border border-blue-500/30">GQ</div>
+                        <div>
+                            <p class="font-bold text-sm text-white">Geovanny Quiros</p>
+                            <p class="text-xs text-blue-400">BE Developer</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic" data-pt="&quot;O Lucas é um desenvolvedor formidável. Sua habilidade em resolver problemas complexos no backend com Node e Python impressiona qualquer equipe.&quot;" data-en="&quot;Lucas is a formidable developer. His ability to solve complex backend problems with Node and Python impresses any team.&quot;">
+                        "O Lucas é um desenvolvedor formidável. Sua habilidade em resolver problemas complexos no backend com Node e Python impressiona qualquer equipe."
+                    </p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform" style="transition-delay: 100ms;">
+                    <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-purple-900/50 rounded-full flex items-center justify-center font-bold text-purple-400 border border-purple-500/30">GH</div>
+                        <div>
+                            <p class="font-bold text-sm text-white">Gabriel Hoff</p>
+                            <p class="text-xs text-purple-400">Engenheiro de Software</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic" data-pt="&quot;Sua arquitetura é limpa e altamente escalável. Aprender e trabalhar lado a lado com as soluções que ele desenha foi uma experiência incrível.&quot;" data-en="&quot;His architecture is clean and highly scalable. Learning and working side by side with the solutions he designs was an amazing experience.&quot;">
+                        "Sua arquitetura é limpa e altamente escalável. Aprender e trabalhar lado a lado com as soluções que ele desenha foi uma experiência incrível."
+                    </p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform" style="transition-delay: 200ms;">
+                    <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-pink-900/50 rounded-full flex items-center justify-center font-bold text-pink-400 border border-pink-500/30">PB</div>
+                        <div>
+                            <p class="font-bold text-sm text-white">Paulo Bender</p>
+                            <p class="text-xs text-pink-400">Arquiteto de Software</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic" data-pt="&quot;Visão técnica fenomenal, sempre focado em resolver problemas de negócio alinhados com a melhor tecnologia disponível. Um parceiro de valor inestimável.&quot;" data-en="&quot;Phenomenal technical vision, always focused on solving business problems aligned with the best available technology. An invaluable partner.&quot;">
+                        "Visão técnica fenomenal, sempre focado em resolver problemas de negócio alinhados com a melhor tecnologia disponível. Um parceiro de valor inestimável."
+                    </p>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform" style="transition-delay: 300ms;">
+                    <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center font-bold text-green-400 border border-green-500/30">JR</div>
+                        <div>
+                            <p class="font-bold text-sm text-white">Jeremias Rohde</p>
+                            <p class="text-xs text-green-400">CEO One</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic" data-pt="&quot;Entregou resultados excepcionais na nossa infraestrutura, automatizando processos que elevaram a eficiência do nosso produto a outro patamar.&quot;" data-en="&quot;Delivered exceptional results in our infrastructure, automating processes that elevated the efficiency of our product to another level.&quot;">
+                        "Entregou resultados excepcionais na nossa infraestrutura, automatizando processos que elevaram a eficiência do nosso produto a outro patamar."
+                    </p>
+                </div>
+
+                <!-- Review 5 -->
+                <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform">
+                    <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-indigo-900/50 rounded-full flex items-center justify-center font-bold text-indigo-400 border border-indigo-500/30">EC</div>
+                        <div>
+                            <p class="font-bold text-sm text-white">Eduardo Casagrande</p>
+                            <p class="text-xs text-indigo-400">Ger. de Arquitetura da One</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic" data-pt="&quot;Liderança técnica impecável e profundo conhecimento em cloud e DevOps. Sabe exatamente como conduzir uma equipe rumo a uma entrega ágil e de qualidade.&quot;" data-en="&quot;Impeccable technical leadership and deep knowledge in cloud and DevOps. Knows exactly how to lead a team towards agile and quality delivery.&quot;">
+                        "Liderança técnica impecável e profundo conhecimento em cloud e DevOps. Sabe exatamente como conduzir uma equipe rumo a uma entrega ágil e de qualidade."
+                    </p>
+                </div>
+
+                <!-- Review 6 -->
+                <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform" style="transition-delay: 100ms;">
+                    <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-blue-900/50 rounded-full flex items-center justify-center font-bold text-blue-400 border border-blue-500/30">PR</div>
+                        <div>
+                            <p class="font-bold text-sm text-white">Peter Rawlins</p>
+                            <p class="text-xs text-blue-400">COO XChange Place</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic" data-pt="&quot;Fundamental para a escala da nossa plataforma. O Lucas é um profissional brilhante com uma visão estritamente voltada para o sucesso do business.&quot;" data-en="&quot;Crucial for our platform's scale. Lucas is a brilliant professional with a vision strictly focused on business success.&quot;">
+                        "Fundamental para a escala da nossa plataforma. O Lucas é um profissional brilhante com uma visão estritamente voltada para o sucesso do business."
+                    </p>
+                </div>
+
+                <!-- Review 7 -->
+                <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform" style="transition-delay: 200ms;">
+                    <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-orange-900/50 rounded-full flex items-center justify-center font-bold text-orange-400 border border-orange-500/30">AM</div>
+                        <div>
+                            <p class="font-bold text-sm text-white">Adriano Muller</p>
+                            <p class="text-xs text-orange-400">CEO Vela</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic" data-pt="&quot;Transformou nossa infraestrutura da noite para o dia, otimizando nossos custos na nuvem e garantindo uma performance e estabilidade sem precedentes.&quot;" data-en="&quot;Transformed our infrastructure overnight, optimizing our cloud costs and ensuring unprecedented performance and stability.&quot;">
+                        "Transformou nossa infraestrutura da noite para o dia, otimizando nossos custos na nuvem e garantindo uma performance e estabilidade sem precedentes."
+                    </p>
+                </div>
+
+                <!-- Review 8 -->
+                <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform" style="transition-delay: 300ms;">
+                    <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 bg-red-900/50 rounded-full flex items-center justify-center font-bold text-red-400 border border-red-500/30">JF</div>
+                        <div>
+                            <p class="font-bold text-sm text-white">Jonas Fleck</p>
+                            <p class="text-xs text-red-400">QA</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm italic" data-pt="&quot;Como QA, é um alívio validar os entregáveis do Lucas. O código é de altíssima qualidade, com cobertura de testes e prevenção de bugs excepcional.&quot;" data-en="&quot;As a QA, it's a relief to validate Lucas's deliverables. The code is of the highest quality, with exceptional test coverage and bug prevention.&quot;">
+                        "Como QA, é um alívio validar os entregáveis do Lucas. O código é de altíssima qualidade, com cobertura de testes e prevenção de bugs excepcional."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-20 px-6 border-t border-white/5 bg-[#030712]">
+        <div class="max-w-4xl mx-auto text-center glass p-12 rounded-[3rem] reveal border border-blue-500/20 shadow-[0_0_50px_rgba(59,130,246,0.1)]">
+            <h2 class="text-3xl md:text-5xl font-extrabold mb-6" data-pt="Pronto para construir o próximo nível?" data-en="Ready to build the next level?">Pronto para construir o próximo nível?</h2>
+            <p class="text-gray-400 mb-10 text-lg" data-pt="De automações com IA até infraestruturas cloud resilientes, eu posso ajudar sua empresa a escalar de forma segura e eficiente." data-en="From AI automations to resilient cloud infrastructures, I can help your company scale securely and efficiently.">
+                De automações com IA até infraestruturas cloud resilientes, eu posso ajudar sua empresa a escalar de forma segura e eficiente.
+            </p>
+            <a href="https://wa.me/5551985339623?text=Ola,+gostaria+de+agendar+uma+conversa+sobre+os+seus+servicos" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 bg-white text-black hover:bg-blue-500 hover:text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all w-full md:w-auto shadow-lg hover:shadow-xl hover:scale-105">
+                <i data-lucide="message-square" class="w-6 h-6"></i>
+                <span data-pt="Falar com o Especialista" data-en="Talk to the Expert">Falar com o Especialista</span>
+            </a>
+            <p class="text-gray-500 text-sm mt-4" data-pt="Resposta em até 24h · Consultoria sem compromisso" data-en="Reply within 24h · No-obligation consultation">Resposta em até 24h · Consultoria sem compromisso</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-white/5 text-center">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-gray-500 text-sm mb-4">&copy; 2025 Cezimbra Corrêa - Novo Hamburgo, RS, Brasil</p>
+            <div class="flex justify-center gap-6">
+                <a href="https://github.com/lucascezimbracorrea" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition">GitHub</a>
+                <a href="https://www.linkedin.com/in/lucascezimbracorrea/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition">LinkedIn</a>
+                <a href="mailto:lucascezimbracorrea@gmail.com" class="hover:text-blue-400 transition">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating -->
+    <a href="https://wa.me/5551985339623" target="_blank" rel="noopener noreferrer" class="fixed bottom-8 right-8 bg-green-500 hover:bg-green-600 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl z-[60] floating-wa">
+        <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
+    </a>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            const isOpen = !menu.classList.contains('hidden');
+            menu.classList.toggle('hidden', isOpen);
+            icon.setAttribute('data-lucide', isOpen ? 'menu' : 'x');
+            lucide.createIcons();
+        }
+
+        // Language Management
+        let currentLang = 'pt';
+        function toggleLang() {
+            currentLang = currentLang === 'pt' ? 'en' : 'pt';
+            document.querySelectorAll('[data-pt]').forEach(el => {
+                const val = el.getAttribute('data-' + currentLang);
+                if (val) el.innerText = val;
+            });
+            document.getElementById('lang-label').innerText = currentLang === 'pt' ? 'EN' : 'PT';
+        }
+
+        // Animated Background
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 60;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#3b82f6';
+            ctx.strokeStyle = '#3b82f622';
+
+            particles.forEach((p, i) => {
+                p.update();
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.lineWidth = 1 - dist / 150;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        initParticles();
+        draw();
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Scroll Animations (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
