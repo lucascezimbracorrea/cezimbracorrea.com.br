@@ -35,11 +35,36 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
 
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: #030712;
             color: #f3f4f6;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+        }
+
+        .snap-section {
+            min-height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .snap-section--compact {
+            min-height: auto;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+            scroll-snap-stop: normal;
+        }
+
+        .snap-section--loose {
+            scroll-snap-stop: normal;
         }
 
         .mono { font-family: 'JetBrains Mono', monospace; }
@@ -61,6 +86,81 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .custom-groups {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .custom-groups {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        .custom-group {
+            padding: 1.35rem 1.5rem;
+            border-radius: 1.15rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: border-color 0.3s ease;
+        }
+
+        .custom-group:hover {
+            border-color: rgba(59, 130, 246, 0.28);
+        }
+
+        .custom-group__icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.85rem;
+        }
+
+        .custom-group__icon svg {
+            width: 1.1rem;
+            height: 1.1rem;
+        }
+
+        .custom-group__title {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+
+        .custom-group__list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .custom-group__list li {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            line-height: 1.4;
+            padding-left: 0.85rem;
+            position: relative;
+        }
+
+        .custom-group__list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 0.3rem;
+            height: 0.3rem;
+            border-radius: 50%;
+            background: #3b82f6;
+            opacity: 0.7;
+        }
+
         .tech-card:hover {
             border-color: #3b82f6;
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
@@ -69,7 +169,7 @@
         }
 
         .gradient-text {
-            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6);
+            background: linear-gradient(90deg, #93c5fd, #3b82f6, #1d4ed8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -99,6 +199,64 @@
             50% { transform: translateY(-10px); }
         }
 
+        .site-footer {
+            position: relative;
+            scroll-snap-align: start;
+        }
+
+        .site-footer__glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(90%, 42rem);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.55), transparent);
+            box-shadow: 0 0 60px 12px rgba(59, 130, 246, 0.07);
+            pointer-events: none;
+        }
+
+        .site-footer__heading {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            color: #3b82f6;
+            margin-bottom: 1.25rem;
+        }
+
+        .site-footer__link {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            line-height: 1.4;
+            transition: color 0.2s ease;
+        }
+
+        .site-footer__link:hover {
+            color: #93c5fd;
+        }
+
+        .site-footer__social {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #9ca3af;
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .site-footer__social:hover {
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.35);
+            background: rgba(59, 130, 246, 0.08);
+            transform: translateY(-2px);
+        }
+
         /* Novas animações para scroll e marquee */
         .reveal {
             opacity: 0;
@@ -121,27 +279,470 @@
         }
         
         .timeline-line {
-            background: linear-gradient(180deg, rgba(59,130,246,0) 0%, rgba(59,130,246,0.5) 15%, rgba(139,92,246,0.5) 85%, rgba(139,92,246,0) 100%);
+            background: linear-gradient(180deg, rgba(59,130,246,0) 0%, rgba(59,130,246,0.45) 50%, rgba(59,130,246,0) 100%);
         }
 
-        .saas-logo-wrap {
-            height: 3rem;
+        .saas-logo-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 9999px;
+            object-fit: cover;
+        }
+
+        .saas-visual {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            padding: 2rem;
+        }
+
+        .saas-visual__logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem 1.75rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .saas-visual__logo img {
+            width: auto;
+            max-width: 15rem;
+            height: auto;
+            max-height: 3.5rem;
+            object-fit: contain;
+        }
+
+        .saas-visual__logo--audoria {
+            background: #ffffff;
+        }
+
+        .saas-visual__logo--audoria img {
+            max-height: 5rem;
+            max-width: 18rem;
+        }
+
+        .saas-visual__logo--noclique {
+            padding: 1.75rem 2rem;
+            min-width: 14rem;
+        }
+
+        .saas-visual__logo--noclique img {
+            max-height: 5.5rem;
+            max-width: 11rem;
+            transform: scale(1.15);
+        }
+
+        .landing-gold-gradient {
+            background: linear-gradient(105deg, #735818, #9e7a1c 26%, #c9982a, #b88922 74%, #7a6218);
+            box-shadow: 0 4px 24px #c9982a61;
+        }
+
+        .gold-accent {
+            color: #c9982a;
+        }
+
+        .gold-accent-badge {
+            color: #c9982a;
+            background: rgba(201, 152, 42, 0.12);
+            border-color: rgba(201, 152, 42, 0.35);
+        }
+
+        .audoria-accent {
+            color: #8a7fd4;
+        }
+
+        .audoria-accent-badge {
+            color: #9b8fe0;
+            background: rgba(123, 111, 206, 0.14);
+            border-color: rgba(123, 111, 206, 0.35);
+        }
+
+        .audoria-btn {
+            background: #7b6fce;
+            color: #fff;
+            transition: background 0.2s ease;
+        }
+
+        .audoria-btn:hover {
+            background: #8f84dc;
+        }
+
+        .clients-marquee {
+            margin-top: 2.5rem;
+            overflow: hidden;
+            position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 2rem;
+        }
+
+        .clients-marquee::before,
+        .clients-marquee::after {
+            content: '';
+            position: absolute;
+            top: 2rem;
+            bottom: 0;
+            width: 5rem;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .clients-marquee::before {
+            left: 0;
+            background: linear-gradient(to right, #030712, transparent);
+        }
+
+        .clients-marquee::after {
+            right: 0;
+            background: linear-gradient(to left, #030712, transparent);
+        }
+
+        .saas-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem 0.25rem;
+            margin-top: 1.25rem;
+            padding: 0.25rem 0;
+        }
+
+        .saas-flow__step {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #6b7280;
+            padding: 0.4rem 0.75rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .saas-flow__step--active {
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.35);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .saas-flow__arrow {
+            color: #374151;
+            font-size: 0.75rem;
+        }
+
+        .saas-partner {
+            position: relative;
+            margin-top: 2rem;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            overflow: hidden;
+        }
+
+        .saas-partner__glow {
+            position: absolute;
+            top: -40%;
+            right: -10%;
+            width: 20rem;
+            height: 20rem;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .saas-partner__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .saas-partner__tag {
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #d1d5db;
+        }
+
+        .saas-scroll-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #6b7280;
+            animation: saas-hint-bounce 2.5s ease-in-out infinite;
+        }
+
+        @keyframes saas-hint-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+
+        .saas-content {
+            max-width: 36rem;
+        }
+
+        .saas-panel--reverse .saas-visual {
+            order: 2;
+        }
+
+        .saas-panel--reverse .saas-content {
+            order: 1;
+        }
+
+        @media (max-width: 1023px) {
+            .saas-panel--reverse .saas-visual,
+            .saas-panel--reverse .saas-content {
+                order: unset;
+            }
+        }
+
+        .scroll-timeline {
+            position: fixed;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 45;
+            width: 8.5rem;
+            display: none;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        @media (min-width: 1280px) {
+            .scroll-timeline {
+                display: flex;
+            }
+        }
+
+        .scroll-timeline__title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #60a5fa;
+            text-align: right;
+            line-height: 1.4;
+            min-height: 2.75rem;
+            margin-bottom: 1rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-timeline__dots {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1.125rem;
+            position: relative;
+            padding-right: 0.45rem;
+        }
+
+        .scroll-timeline__line {
+            position: absolute;
+            right: 0.2rem;
+            top: 0.25rem;
+            bottom: 0.25rem;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .scroll-timeline__dot {
+            width: 0.45rem;
+            height: 0.45rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.22);
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .scroll-timeline__dot:hover {
+            background: rgba(96, 165, 250, 0.6);
+        }
+
+        .scroll-timeline__dot.active {
+            background: #3b82f6;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.65);
+            transform: scale(1.45);
+        }
+
+        .hero-mind {
+            position: relative;
+            width: 100%;
+            height: 28rem;
+            max-width: 36rem;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-mind {
+                height: 36rem;
+                max-width: 44rem;
+            }
+        }
+
+        .hero-mind canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-mind__glow {
+            position: absolute;
+            inset: 10%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.18), transparent 70%);
+            pointer-events: none;
+        }
+
+        .ceo-photo {
             width: 11rem;
+            height: 11rem;
+            object-fit: cover;
+            border-radius: 1.5rem;
+            border: 2px solid rgba(59, 130, 246, 0.35);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.15);
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.45rem;
+            max-width: 100%;
+        }
+
+        .hero-stat {
+            --stat-delay: 0ms;
+            position: relative;
+            padding: 0.5rem 0.35rem;
+            border-radius: 0.65rem;
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.1), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            transition-delay: var(--stat-delay);
+            text-align: center;
+        }
+
+        .hero-stats.active .hero-stat {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-stat::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, transparent 38%, rgba(147, 197, 253, 0.12) 50%, transparent 62%);
+            transform: translateX(-120%);
+            animation: hero-stat-shine 5s ease-in-out infinite;
+            animation-delay: var(--stat-delay);
+            pointer-events: none;
+        }
+
+        .hero-stat:hover {
+            border-color: rgba(59, 130, 246, 0.35);
+            box-shadow: 0 8px 28px rgba(59, 130, 246, 0.12);
+            transform: translateY(-2px);
+        }
+
+        @keyframes hero-stat-shine {
+            0%, 70% { transform: translateX(-120%); }
+            100% { transform: translateX(120%); }
+        }
+
+        .hero-stat__icon {
+            display: none;
+        }
+
+        .hero-stat__value {
+            font-size: 1rem;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(135deg, #ffffff, #93c5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .hero-stat__label {
+            font-size: 0.58rem;
+            color: #9ca3af;
+            line-height: 1.2;
+        }
+
+        .hero-stat__pulse {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 0.75rem;
-            padding: 0.375rem 0.75rem;
-            margin-bottom: 1.5rem;
+            gap: 0.2rem;
         }
-        .saas-logo-wrap img {
-            height: 2.25rem;
-            width: 100%;
-            object-fit: contain;
+
+        .hero-stat__pulse-dot {
+            width: 0.3rem;
+            height: 0.3rem;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.7);
+            animation: hero-pulse-dot 2s ease-in-out infinite;
         }
-        .saas-logo-wrap--noclique img {
-            height: 3.25rem;
-            transform: scale(1.2);
+
+        @keyframes hero-pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(0.85); }
+        }
+
+        .wa-icon {
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 0.15rem;
+            padding: 0.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .lang-switcher__btn {
+            font-size: 1.05rem;
+            line-height: 1;
+            padding: 0.3rem 0.4rem;
+            border-radius: 0.35rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .lang-switcher__btn:hover {
+            opacity: 0.85;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .lang-switcher__btn.active {
+            opacity: 1;
+            background: rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.35);
         }
     </style>
     <script type="application/ld+json">
@@ -163,7 +764,7 @@
             "telephone": "+55-51-98533-9623",
             "contactType": "customer service",
             "areaServed": "BR",
-            "availableLanguage": ["Portuguese", "English"]
+            "availableLanguage": ["Portuguese", "English", "Spanish"]
         },
         "sameAs": [
             "https://www.linkedin.com/in/lucascezimbracorrea/",
@@ -173,8 +774,27 @@
     </script>
 </head>
 <body class="selection:bg-blue-500 selection:text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+        <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </symbol>
+        <symbol id="icon-github" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 0C5.37 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.466-1.334-5.466-5.931 0-1.31.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </symbol>
+        <symbol id="icon-linkedin" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 114.126 0 2.063 2.063 0 01-2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </symbol>
+    </svg>
     <canvas id="canvas-bg"></canvas>
     <div class="scanline"></div>
+
+    <!-- Scroll timeline (desktop) -->
+    <nav id="scroll-timeline" class="scroll-timeline" aria-label="Navegação por seções">
+        <p id="scroll-timeline-title" class="scroll-timeline__title">Empresa</p>
+        <div class="scroll-timeline__dots">
+            <div class="scroll-timeline__line" aria-hidden="true"></div>
+        </div>
+    </nav>
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 px-6 py-4">
@@ -182,13 +802,13 @@
             <div class="flex items-center gap-3">
                 <div class="flex -space-x-3">
                     <div class="w-10 h-10 bg-[#3b82f6] rounded-[0.4rem] flex items-center justify-center font-extrabold text-white text-xl z-10 shadow-lg">C</div>
-                    <div class="w-10 h-10 bg-[#8b5cf6] rounded-[0.4rem] flex items-center justify-center font-extrabold text-white text-xl shadow-lg">C</div>
+                    <div class="w-10 h-10 bg-[#1d4ed8] rounded-[0.4rem] flex items-center justify-center font-extrabold text-white text-xl shadow-lg">C</div>
                 </div>
                 <span class="font-bold tracking-tighter text-xl uppercase mt-1">CEZIMBRA<span class="text-[#3b82f6]">CORRÊA</span></span>
             </div>
             
             <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#home" class="hover:text-blue-400 transition" data-pt="Início" data-en="Home">Início</a>
+                <a href="#home" class="hover:text-blue-400 transition" data-pt="Empresa" data-en="Company">Empresa</a>
                 <a href="#products" class="hover:text-blue-400 transition" data-pt="SaaS & IA" data-en="SaaS & AI">SaaS & IA</a>
                 <a href="#services" class="hover:text-blue-400 transition" data-pt="Serviços" data-en="Services">Serviços</a>
                 <a href="#about" class="hover:text-blue-400 transition" data-pt="Sobre" data-en="About">Sobre</a>
@@ -199,11 +819,13 @@
             </button>
 
             <div class="hidden md:flex items-center gap-4">
-                <button onclick="toggleLang()" class="mono text-xs border border-gray-700 px-2 py-1 rounded hover:bg-gray-800 transition">
-                    <span id="lang-label">EN</span>
-                </button>
+                <div class="lang-switcher" role="group" aria-label="Idioma">
+                    <button type="button" class="lang-switcher__btn active" data-lang="pt" onclick="setLang('pt')" title="Português" aria-label="Português">🇧🇷</button>
+                    <button type="button" class="lang-switcher__btn" data-lang="en" onclick="setLang('en')" title="English" aria-label="English">🇺🇸</button>
+                    <button type="button" class="lang-switcher__btn" data-lang="es" onclick="setLang('es')" title="Español" aria-label="Español">🇪🇸</button>
+                </div>
                 <a href="https://wa.me/5551985339623" target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2">
-                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                    <svg class="wa-icon w-4 h-4" aria-hidden="true"><use href="#icon-whatsapp"/></svg>
                     <span data-pt="Contato" data-en="Contact">Contato</span>
                 </a>
             </div>
@@ -214,209 +836,308 @@
     <div id="mobile-menu" class="fixed inset-0 z-40 md:hidden hidden">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="toggleMobileMenu()"></div>
         <div class="absolute top-0 right-0 w-72 h-full glass border-l border-white/10 p-6 pt-24 flex flex-col gap-4">
-            <a href="#home" class="text-lg font-medium hover:text-blue-400 transition py-2" data-pt="Início" data-en="Home" onclick="toggleMobileMenu()">Início</a>
+            <a href="#home" class="text-lg font-medium hover:text-blue-400 transition py-2" data-pt="Empresa" data-en="Company" onclick="toggleMobileMenu()">Empresa</a>
             <a href="#products" class="text-lg font-medium hover:text-blue-400 transition py-2" data-pt="SaaS & IA" data-en="SaaS & AI" onclick="toggleMobileMenu()">SaaS & IA</a>
             <a href="#services" class="text-lg font-medium hover:text-blue-400 transition py-2" data-pt="Serviços" data-en="Services" onclick="toggleMobileMenu()">Serviços</a>
             <a href="#about" class="text-lg font-medium hover:text-blue-400 transition py-2" data-pt="Sobre" data-en="About" onclick="toggleMobileMenu()">Sobre</a>
+            <div class="lang-switcher mt-2 self-start" role="group" aria-label="Idioma">
+                <button type="button" class="lang-switcher__btn active" data-lang="pt" onclick="setLang('pt')" title="Português">🇧🇷</button>
+                <button type="button" class="lang-switcher__btn" data-lang="en" onclick="setLang('en')" title="English">🇺🇸</button>
+                <button type="button" class="lang-switcher__btn" data-lang="es" onclick="setLang('es')" title="Español">🇪🇸</button>
+            </div>
             <a href="https://wa.me/5551985339623" target="_blank" rel="noopener noreferrer" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-xl font-bold flex items-center gap-2 justify-center">
-                <i data-lucide="message-square" class="w-5 h-5"></i>
+                <svg class="wa-icon w-5 h-5" aria-hidden="true"><use href="#icon-whatsapp"/></svg>
                 <span data-pt="Contato" data-en="Contact">Contato</span>
             </a>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen pt-32 pb-20 px-6 flex flex-col items-center justify-center text-center">
-        <div class="relative mb-8">
-            <div class="absolute inset-0 bg-blue-500 blur-3xl opacity-20 rounded-full"></div>
-            <img src="me.jpeg" alt="Lucas Cezimbra Corrêa - Engenheiro de Software e Especialista em IA" width="160" height="160" class="relative w-40 h-40 object-cover rounded-2xl border-2 border-blue-500/50 grayscale hover:grayscale-0 transition-all duration-500 shadow-2xl" fetchpriority="high">
+    <!-- Hero — Empresa -->
+    <section id="home" class="snap-section timeline-section min-h-screen pt-28 pb-16 px-6" data-timeline-pt="Empresa" data-timeline-en="Company" data-timeline-es="Empresa">
+        <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div class="reveal">
+                <p class="mono text-xs uppercase tracking-[0.25em] text-blue-400 mb-5" data-pt="Tecnologia que conecta negócios" data-en="Technology that connects businesses">Tecnologia que conecta negócios</p>
+                <h1 class="text-3xl md:text-4xl xl:text-5xl font-extrabold mb-6 tracking-tight leading-[1.1]">
+                    <span data-pt="Software e IA que" data-en="Software and AI that">Software e IA que</span><br/>
+                    <span class="gradient-text" data-pt="escalam sua operação" data-en="scale your business" data-es="escalan su operación">escalam sua operação</span>
+                </h1>
+                <p class="text-gray-400 text-base leading-relaxed mb-8 max-w-xl"
+                   data-pt="Da arquitetura ao deploy, entregamos software e sistemas com IA que escalam com o seu negócio. Engenharia, produto e resultado em um só time — para quem precisa crescer rápido sem comprometer a operação."
+                   data-en="From architecture to deployment, we deliver software and AI systems that scale with your business. Engineering, product, and results in one team — for companies that need to grow fast without compromising operations.">
+                   Da arquitetura ao deploy, entregamos software e sistemas com IA que escalam com o seu negócio. Engenharia, produto e resultado em um só time — para quem precisa crescer rápido sem comprometer a operação.
+                </p>
+                <div class="flex flex-wrap gap-4 mb-10">
+                    <a href="#products" class="px-7 py-3.5 bg-white text-black font-bold rounded-xl hover:bg-blue-500 hover:text-white transition-all flex items-center gap-2">
+                        <span data-pt="Conheça nossas plataformas" data-en="Explore our platforms">Conheça nossas plataformas</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#contact" class="px-7 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all flex items-center gap-2">
+                        <span data-pt="Falar com a empresa" data-en="Talk to us">Falar com a empresa</span>
+                        <i data-lucide="message-square" class="w-5 h-5"></i>
+                    </a>
+                </div>
+                <div class="hero-stats reveal" id="hero-stats">
+                    <div class="hero-stat" style="--stat-delay: 0ms">
+                        <p class="hero-stat__value"><span class="hero-stat__counter" data-target="50">0</span>+</p>
+                        <p class="hero-stat__label" data-pt="Entregues" data-en="Delivered">Entregues</p>
+                    </div>
+                    <div class="hero-stat" style="--stat-delay: 80ms">
+                        <p class="hero-stat__value"><span class="hero-stat__counter" data-target="3">0</span>+</p>
+                        <p class="hero-stat__label" data-pt="SaaS ativos" data-en="Live SaaS">SaaS ativos</p>
+                    </div>
+                    <div class="hero-stat" style="--stat-delay: 160ms">
+                        <p class="hero-stat__value"><span class="hero-stat__counter" data-target="10">0</span>+</p>
+                        <p class="hero-stat__label" data-pt="Anos" data-en="Years">Anos</p>
+                    </div>
+                    <div class="hero-stat" style="--stat-delay: 240ms">
+                        <p class="hero-stat__value hero-stat__pulse">
+                            <span class="hero-stat__pulse-dot" aria-hidden="true"></span>
+                            <span class="hero-stat__counter" data-target="99.9" data-decimals="1">0</span>%
+                        </p>
+                        <p class="hero-stat__label" data-pt="Uptime" data-en="Uptime">Uptime</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-mind reveal">
+                <div class="hero-mind__glow"></div>
+                <canvas id="hero-mind-canvas" aria-hidden="true"></canvas>
+            </div>
         </div>
-        
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-            <span data-pt="Construindo o Futuro com" data-en="Building the Future with">Construindo o Futuro com</span><br/>
-            <span class="gradient-text" data-pt="Inteligência Artificial" data-en="Artificial Intelligence">Inteligência Artificial</span>
-        </h1>
-        
-        <p class="max-w-2xl text-gray-400 text-lg md:text-xl mb-10 leading-relaxed" 
-           data-pt="Engenheiro de Software Senior & DevOps com +10 anos de experiência transformando ideias complexas em produtos escaláveis de alta performance."
-           data-en="Senior Software Engineer & DevOps with 10+ years of experience transforming complex ideas into high-performance scalable products.">
-           Engenheiro de Software Senior & DevOps com +10 anos de experiência transformando ideias complexas em produtos escaláveis de alta performance.
-        </p>
+    </section>
 
-        <div class="flex flex-wrap justify-center gap-4">
-            <a href="#products" class="px-8 py-4 bg-white text-black font-bold rounded-2xl hover:bg-blue-500 hover:text-white transition-all flex items-center gap-2">
-                <span data-pt="Ver Produtos IA" data-en="Explore AI Products">Ver Produtos IA</span>
-                <i data-lucide="arrow-right" class="w-5 h-5"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/lucascezimbracorrea/" target="_blank" rel="noopener noreferrer" class="px-8 py-4 glass font-bold rounded-2xl hover:bg-gray-800 transition-all flex items-center gap-2">
-                <i data-lucide="linkedin" class="w-5 h-5"></i>
-                LinkedIn
+    <!-- AI SaaS Products -->
+    <section id="products" class="snap-section timeline-section px-6 bg-gray-900/30 border-t border-white/5" data-timeline-pt="SaaS & IA" data-timeline-en="SaaS & AI" data-timeline-es="SaaS e IA">
+        <div class="max-w-6xl mx-auto w-full reveal">
+            <div class="text-center">
+                <p class="mono text-xs uppercase tracking-[0.25em] text-blue-400 mb-4" data-pt="Produtos em produção" data-en="Live products">Produtos em produção</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-4" data-pt="Construímos software que resolve mercados reais" data-en="We build software that solves real markets">Construímos software que resolve mercados reais</h2>
+            </div>
+
+            <div class="saas-flow" aria-hidden="true">
+                <span class="saas-flow__step" data-pt="Mercado" data-en="Market">Mercado</span>
+                <span class="saas-flow__arrow">→</span>
+                <span class="saas-flow__step" data-pt="Produto" data-en="Product">Produto</span>
+                <span class="saas-flow__arrow">→</span>
+                <span class="saas-flow__step saas-flow__step--active" data-pt="IA integrada" data-en="Built-in AI">IA integrada</span>
+                <span class="saas-flow__arrow">→</span>
+                <span class="saas-flow__step saas-flow__step--active" data-pt="Em produção" data-en="In production">Em produção</span>
+            </div>
+
+            <div class="saas-partner">
+                <div class="saas-partner__glow"></div>
+                <div class="grid md:grid-cols-[1.2fr_1fr] gap-8 items-center relative">
+                    <div>
+                        <p class="mono text-xs uppercase tracking-[0.2em] text-blue-400 mb-3" data-pt="Parcerias & co-criação" data-en="Partnerships & co-creation">Parcerias & co-criação</p>
+                        <h3 class="text-2xl md:text-3xl font-extrabold mb-3" data-pt="Quer construir um sistema juntos?" data-en="Want to build a system together?">Quer construir um sistema juntos?</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed"
+                           data-pt="Se você tem um mercado, uma base de clientes ou uma ideia validada — podemos co-criar a plataforma, colocar em produção e escalar com IA. Do MVP ao produto maduro."
+                           data-en="If you have a market, a client base, or a validated idea — we can co-create the platform, put it in production, and scale with AI. From MVP to mature product.">
+                           Se você tem um mercado, uma base de clientes ou uma ideia validada — podemos co-criar a plataforma, colocar em produção e escalar com IA. Do MVP ao produto maduro.
+                        </p>
+                        <div class="saas-partner__tags">
+                            <span class="saas-partner__tag" data-pt="Co-desenvolvimento" data-en="Co-development">Co-desenvolvimento</span>
+                            <span class="saas-partner__tag" data-pt="White-label" data-en="White-label">White-label</span>
+                            <span class="saas-partner__tag" data-pt="Parceria comercial" data-en="Commercial partnership">Parceria comercial</span>
+                            <span class="saas-partner__tag" data-pt="Revenda" data-en="Reseller">Revenda</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <a href="#contact" class="px-6 py-3.5 bg-white text-black font-bold rounded-xl hover:bg-blue-500 hover:text-white transition-all flex items-center justify-center gap-2 text-sm">
+                            <span data-pt="Agendar uma conversa" data-en="Schedule a call">Agendar uma conversa</span>
+                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                        </a>
+                        <a href="https://wa.me/5551985339623?text=Ola,+tenho+interesse+em+uma+parceria+para+construir+um+sistema" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-sm">
+                            <svg class="wa-icon w-4 h-4" aria-hidden="true"><use href="#icon-whatsapp"/></svg>
+                            <span data-pt="Falar sobre parceria" data-en="Talk about partnership">Falar sobre parceria</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#product-aura" class="saas-scroll-hint mx-auto flex w-fit">
+                <span data-pt="Conheça nossas plataformas abaixo" data-en="Explore our platforms below">Conheça nossas plataformas abaixo</span>
+                <i data-lucide="chevron-down" class="w-4 h-4"></i>
             </a>
         </div>
     </section>
 
-    <!-- Social Proof / Trusted By -->
-    <div class="w-full border-y border-white/5 bg-gray-900/30 py-8 overflow-hidden relative">
-        <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#030712] to-transparent z-10"></div>
-        <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#030712] to-transparent z-10"></div>
-        
-        <div class="marquee-container flex items-center gap-16 md:gap-24 px-4 w-max">
-            <!-- Set 1 -->
-            <div class="flex items-center gap-16 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="shield-check" class="text-blue-500"></i> White Prompt</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="box" class="text-purple-500"></i> Box360</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="triangle" class="text-blue-400"></i> Z3</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="code-2" class="text-green-500"></i> BairesDev</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="hexagon" class="text-pink-500"></i> One</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="activity" class="text-yellow-500"></i> XChange Place</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="zap" class="text-orange-500"></i> Vela</span>
-            </div>
-            <!-- Set 2 (Clone for infinite scroll) -->
-            <div class="flex items-center gap-16 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="shield-check" class="text-blue-500"></i> White Prompt</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="box" class="text-purple-500"></i> Box360</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="triangle" class="text-blue-400"></i> Z3</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="code-2" class="text-green-500"></i> BairesDev</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="hexagon" class="text-pink-500"></i> One</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="activity" class="text-yellow-500"></i> XChange Place</span>
-                <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="zap" class="text-orange-500"></i> Vela</span>
+    <!-- AURA AESTHETIC -->
+    <section id="product-aura" class="snap-section timeline-section saas-panel px-6 border-t border-white/5" data-timeline-pt="AURA AESTHETIC" data-timeline-en="AURA AESTHETIC">
+        <div class="max-w-7xl mx-auto w-full reveal">
+            <div class="saas-grid grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="saas-visual">
+                    <div class="saas-visual__logo landing-gold-gradient">
+                        <img src="logo-aura.png" alt="AURA AESTHETIC" width="240" height="48">
+                    </div>
+                    <p class="mono text-sm text-gray-500">auraesthetic.com.br</p>
+                    <span class="inline-flex text-xs font-semibold uppercase tracking-wider gold-accent-badge border px-3 py-1.5 rounded-full"
+                          data-pt="Clínicas & pós-graduação" data-en="Clinics & postgraduate">Clínicas & pós-graduação</span>
+                </div>
+                <div class="saas-content lg:ml-auto w-full">
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-4">AURA AESTHETIC</h3>
+                    <p class="text-lg text-gray-300 font-medium mb-4"
+                       data-pt="A plataforma inteligente com IA para clínicas de estética e instituições de pós-graduação."
+                       data-en="The intelligent AI-powered platform for aesthetic clinics and postgraduate institutions.">
+                       A plataforma inteligente com IA para clínicas de estética e instituições de pós-graduação.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed mb-6"
+                       data-pt="Gestão de leads, clientes, alunos, turmas, notas, cursos e muito mais em um só lugar. Agentes de IA no WhatsApp e no site atendem 24 horas, qualificam interesse e conduzem até o agendamento ou matrícula."
+                       data-en="Manage leads, clients, students, classes, grades, courses, and more in one place. AI agents on WhatsApp and your website work 24/7, qualify interest, and guide prospects to bookings or enrollment.">
+                       Gestão de leads, clientes, alunos, turmas, notas, cursos e muito mais em um só lugar. Agentes de IA no WhatsApp e no site atendem 24 horas, qualificam interesse e conduzem até o agendamento ou matrícula.
+                    </p>
+                    <ul class="space-y-2.5 mb-8 text-sm text-gray-300">
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 gold-accent mt-0.5 shrink-0"></i><span data-pt="Gestão de leads, clientes e pacientes" data-en="Lead, client, and patient management">Gestão de leads, clientes e pacientes</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 gold-accent mt-0.5 shrink-0"></i><span data-pt="Alunos, turmas, notas e cursos" data-en="Students, classes, grades, and courses">Alunos, turmas, notas e cursos</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 gold-accent mt-0.5 shrink-0"></i><span data-pt="Agentes de IA no WhatsApp e WebChat" data-en="AI agents on WhatsApp and WebChat">Agentes de IA no WhatsApp e WebChat</span></li>
+                    </ul>
+                    <a href="https://www.auraesthetic.com.br/" target="_blank" rel="noopener noreferrer" class="landing-gold-gradient inline-flex items-center gap-2 text-black hover:brightness-110 px-7 py-3.5 rounded-xl font-bold text-sm transition-all">
+                        <span data-pt="Conhecer a plataforma" data-en="Explore the platform">Conhecer a plataforma</span>
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- AI SaaS Products -->
-    <section id="products" class="py-24 px-6 bg-gray-900/30">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-16">
-                <h2 class="text-3xl font-bold mb-4" data-pt="Soluções SaaS com IA" data-en="AI SaaS Solutions">Soluções SaaS com IA</h2>
-                <div class="h-1 w-20 bg-blue-600 rounded"></div>
+    <!-- NoClique -->
+    <section id="product-noclique" class="snap-section timeline-section saas-panel saas-panel--reverse px-6 border-t border-white/5 bg-gray-900/20" data-timeline-pt="NoClique" data-timeline-en="NoClique">
+        <div class="max-w-7xl mx-auto w-full reveal">
+            <div class="saas-grid grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="saas-content lg:mr-auto w-full">
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-4">NoClique</h3>
+                    <p class="text-lg text-gray-300 font-medium mb-4"
+                       data-pt="O CRM com IA que fotógrafos e estúdios usam para vender mais ensaios e organizar toda a operação."
+                       data-en="The AI-powered CRM photographers and studios use to sell more sessions and run their entire operation.">
+                       O CRM com IA que fotógrafos e estúdios usam para vender mais ensaios e organizar toda a operação.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed mb-6"
+                       data-pt="Automatiza orçamentos, follow-ups e agendamentos. Seus agentes de IA respondem clientes e liberam você para focar em criar e entregar trabalhos incríveis."
+                       data-en="Automates quotes, follow-ups, and scheduling. Your AI agents handle clients and free you to focus on creating and delivering amazing work.">
+                       Automatiza orçamentos, follow-ups e agendamentos. Seus agentes de IA respondem clientes e liberam você para focar em criar e entregar trabalhos incríveis.
+                    </p>
+                    <ul class="space-y-2.5 mb-8 text-sm text-gray-300">
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 mt-0.5 shrink-0"></i><span data-pt="CRM pensado para fotógrafos e estúdios" data-en="CRM built for photographers and studios">CRM pensado para fotógrafos e estúdios</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 mt-0.5 shrink-0"></i><span data-pt="Agentes de IA para atendimento e vendas" data-en="AI agents for service and sales">Agentes de IA para atendimento e vendas</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 mt-0.5 shrink-0"></i><span data-pt="Gestão de leads, clientes e agenda" data-en="Lead, client, and schedule management">Gestão de leads, clientes e agenda</span></li>
+                    </ul>
+                    <a href="https://noclique.com.br/" target="_blank" rel="noopener noreferrer" class="landing-gold-gradient inline-flex items-center gap-2 text-black hover:brightness-110 px-7 py-3.5 rounded-xl font-bold text-sm transition-all">
+                        <span data-pt="Conhecer a plataforma" data-en="Explore the platform">Conhecer a plataforma</span>
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                </div>
+                <div class="saas-visual">
+                    <div class="saas-visual__logo saas-visual__logo--noclique landing-gold-gradient">
+                        <img src="logo-noclique.png" alt="NoClique" width="280" height="80">
+                    </div>
+                    <p class="mono text-sm text-gray-500">noclique.com.br</p>
+                    <span class="inline-flex text-xs font-semibold uppercase tracking-wider text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-full"
+                          data-pt="Fotógrafos & estúdios" data-en="Photographers & studios">Fotógrafos & estúdios</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audória -->
+    <section id="product-audoria" class="snap-section timeline-section saas-panel px-6 border-t border-white/5" data-timeline-pt="Audória" data-timeline-en="Audória">
+        <div class="max-w-7xl mx-auto w-full reveal">
+            <div class="saas-grid grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="saas-visual">
+                    <div class="saas-visual__logo saas-visual__logo--audoria">
+                        <img src="logo-audoria.png" alt="Audória" width="240" height="56">
+                    </div>
+                    <p class="mono text-sm text-gray-500">audoria.com.br</p>
+                    <span class="inline-flex text-xs font-semibold uppercase tracking-wider audoria-accent-badge border px-3 py-1.5 rounded-full"
+                          data-pt="Empresas & setor público" data-en="Companies & public sector">Empresas & setor público</span>
+                </div>
+                <div class="saas-content lg:ml-auto w-full">
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-4">Audória</h3>
+                    <p class="text-lg text-gray-300 font-medium mb-4"
+                       data-pt="A plataforma de ouvidoria e atendimento que organiza manifestações, acelera respostas e fortalece a confiança com cidadãos e clientes."
+                       data-en="The ombudsman and customer service platform that organizes requests, speeds up responses, and builds trust with citizens and clients.">
+                       A plataforma de ouvidoria e atendimento que organiza manifestações, acelera respostas e fortalece a confiança com cidadãos e clientes.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed mb-6"
+                       data-pt="IA para triagem, pré-análise e atendimento via WhatsApp. Ajuda prefeituras, câmaras e empresas a responder com transparência e conformidade com a LGPD."
+                       data-en="AI for triage, pre-analysis, and WhatsApp support. Helps city halls, councils, and companies respond with transparency and LGPD compliance.">
+                       IA para triagem, pré-análise e atendimento via WhatsApp. Ajuda prefeituras, câmaras e empresas a responder com transparência e conformidade com a LGPD.
+                    </p>
+                    <ul class="space-y-2.5 mb-8 text-sm text-gray-300">
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 audoria-accent mt-0.5 shrink-0"></i><span data-pt="Ouvidoria com dashboard em tempo real" data-en="Ombudsman with real-time dashboard">Ouvidoria com dashboard em tempo real</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 audoria-accent mt-0.5 shrink-0"></i><span data-pt="IA para triagem e pré-análise" data-en="AI for triage and pre-analysis">IA para triagem e pré-análise</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 audoria-accent mt-0.5 shrink-0"></i><span data-pt="Segurança, LGPD e relatórios" data-en="Security, LGPD, and reports">Segurança, LGPD e relatórios</span></li>
+                    </ul>
+                    <a href="https://audoria.com.br/" target="_blank" rel="noopener noreferrer" class="audoria-btn inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-all">
+                        <span data-pt="Conhecer a plataforma" data-en="Explore the platform">Conhecer a plataforma</span>
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Solutions -->
+    <section id="products-custom" class="snap-section timeline-section px-6 bg-gray-900/30 border-t border-white/5" data-timeline-pt="Sob medida" data-timeline-en="Custom built" data-timeline-es="A medida">
+        <div class="max-w-5xl mx-auto w-full reveal">
+            <div class="text-center">
+                <p class="mono text-xs uppercase tracking-[0.25em] text-blue-400 mb-4" data-pt="Sob medida" data-en="Custom built">Sob medida</p>
+                <h3 class="text-3xl md:text-4xl font-bold mb-3" data-pt="Sistemas para o seu negócio" data-en="Systems for your business">Sistemas para o seu negócio</h3>
+                <p class="max-w-xl mx-auto text-gray-400 text-sm"
+                   data-pt="Desenvolvemos plataformas sob medida — do CRM à telefonia, apps e operação."
+                   data-en="We build custom platforms — from CRM to telephony, apps, and operations.">
+                   Desenvolvemos plataformas sob medida — do CRM à telefonia, apps e operação.
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- AURA AESTHETIC -->
-                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
-                    <div class="saas-logo-wrap" style="background: rgba(9, 9, 11, 0.8);">
-                        <img src="logo-aura.png" alt="AURA AESTHETIC" width="176" height="36">
+            <div class="custom-groups">
+                <div class="custom-group">
+                    <div class="custom-group__icon bg-blue-500/20 text-blue-400">
+                        <i data-lucide="layout-grid"></i>
                     </div>
-                    <p class="mono text-xs text-gray-500 mb-3">auraesthetic.com.br</p>
-                    <p class="text-gray-400 text-sm mb-6"
-                       data-pt="CRM com IA e agentes para WhatsApp e Web para clínicas de estética e pós-graduação."
-                       data-en="AI-powered CRM with WhatsApp and Web agents for aesthetic clinics and postgraduate programs.">
-                       CRM com IA e agentes para WhatsApp e Web para clínicas de estética e pós-graduação.
-                    </p>
-                    <a href="https://www.auraesthetic.com.br/" target="_blank" rel="noopener noreferrer" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
-                        <span data-pt="Visitar plataforma" data-en="Visit platform">Visitar plataforma</span>
-                        <i data-lucide="external-link" class="w-4 h-4"></i>
-                    </a>
+                    <h4 class="custom-group__title" data-pt="Gestão & CRM" data-en="Management & CRM">Gestão & CRM</h4>
+                    <ul class="custom-group__list">
+                        <li data-pt="CRM — agendamento, assinatura e campanhas" data-en="CRM — scheduling, subscriptions, and campaigns">CRM — agendamento, assinatura e campanhas</li>
+                        <li data-pt="Landing pages integradas" data-en="Integrated landing pages">Landing pages integradas</li>
+                        <li data-pt="Agentes com IA no atendimento" data-en="AI agents for customer service">Agentes com IA no atendimento</li>
+                    </ul>
                 </div>
 
-                <!-- NoClique -->
-                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
-                    <div class="saas-logo-wrap saas-logo-wrap--noclique bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 shadow-inner">
-                        <img src="logo-noclique.png" alt="NoClique" width="176" height="36">
-                    </div>
-                    <p class="mono text-xs text-gray-500 mb-3">noclique.com.br</p>
-                    <p class="text-gray-400 text-sm mb-6"
-                       data-pt="CRM com IA e agentes para fotógrafos e estúdios."
-                       data-en="AI-powered CRM with agents for photographers and studios.">
-                       CRM com IA e agentes para fotógrafos e estúdios.
-                    </p>
-                    <a href="https://noclique.com.br/" target="_blank" rel="noopener noreferrer" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
-                        <span data-pt="Visitar plataforma" data-en="Visit platform">Visitar plataforma</span>
-                        <i data-lucide="external-link" class="w-4 h-4"></i>
-                    </a>
-                </div>
-
-                <!-- Audória -->
-                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
-                    <div class="saas-logo-wrap bg-white">
-                        <img src="logo-audoria.png" alt="Audória" width="176" height="36">
-                    </div>
-                    <p class="mono text-xs text-gray-500 mb-3">audoria.com.br</p>
-                    <p class="text-gray-400 text-sm mb-6"
-                       data-pt="Plataforma de ouvidoria e atendimento com IA para empresas, prefeituras e órgãos públicos."
-                       data-en="Ombudsman and customer service platform with AI for companies, city halls, and public agencies.">
-                       Plataforma de ouvidoria e atendimento com IA para empresas, prefeituras e órgãos públicos.
-                    </p>
-                    <a href="https://audoria.com.br/" target="_blank" rel="noopener noreferrer" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
-                        <span data-pt="Visitar plataforma" data-en="Visit platform">Visitar plataforma</span>
-                        <i data-lucide="external-link" class="w-4 h-4"></i>
-                    </a>
-                </div>
-
-                <!-- Product 1 -->
-                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
-                    <div class="w-12 h-12 bg-green-500/20 text-green-400 rounded-xl flex items-center justify-center mb-6">
-                        <i data-lucide="bot"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3" data-pt="Agente com IA para WhatsApp" data-en="AI Agent for WhatsApp">Agente com IA para WhatsApp</h3>
-                    <p class="text-gray-400 text-sm mb-6" 
-                       data-pt="Atendimento 24/7 com IA integrada (GPT-4) que entende o contexto do seu negócio e converte leads automaticamente."
-                       data-en="24/7 customer service with integrated AI (GPT-4) that understands your business context and converts leads automatically.">
-                       Atendimento 24/7 com IA integrada (GPT-4) que entende o contexto do seu negócio e converte leads automaticamente.
-                    </p>
-                    <button onclick="window.location.href='https://wa.me/5551985339623?text=Quero+saber+mais+sobre+o+Agente+com+IA+para+WhatsApp'" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
-                        <span data-pt="Solicitar Demo" data-en="Request Demo">Solicitar Demo</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
-                    <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center mb-6">
+                <div class="custom-group">
+                    <div class="custom-group__icon bg-sky-500/20 text-sky-400">
                         <i data-lucide="phone-call"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3" data-pt="Agente com IA por chamada" data-en="AI Voice Agent">Agente com IA por chamada</h3>
-                    <p class="text-gray-400 text-sm mb-6" 
-                       data-pt="Sistema automatizado de chamadas de voz via WhatsApp para lembretes de consultas, cobranças e validações em massa."
-                       data-en="Automated voice call system via WhatsApp for appointment reminders, billing, and bulk validations.">
-                       Sistema automatizado de chamadas de voz via WhatsApp para lembretes de consultas, cobranças e validações em massa.
-                    </p>
-                    <button onclick="window.location.href='https://wa.me/5551985339623?text=Quero+saber+mais+sobre+o+Agente+com+IA+por+chamada'" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
-                        <span data-pt="Ver mais" data-en="Learn More">Ver mais</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
+                    <h4 class="custom-group__title" data-pt="Telefonia" data-en="Telephony">Telefonia</h4>
+                    <ul class="custom-group__list">
+                        <li>PBX Multiempresa</li>
+                        <li data-pt="Cloud Softphone com sua marca" data-en="Branded cloud softphone">Cloud Softphone com sua marca</li>
+                        <li data-pt="Telefonia para hotéis" data-en="Hotel telephony">Telefonia para hotéis</li>
+                        <li data-pt="Agente IA — WhatsApp e telefonia" data-en="AI agent — WhatsApp and telephony">Agente IA — WhatsApp e telefonia</li>
+                    </ul>
                 </div>
 
-                <!-- Product 3 -->
-                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
-                    <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center mb-6">
-                        <i data-lucide="megaphone"></i>
+                <div class="custom-group">
+                    <div class="custom-group__icon bg-amber-500/20 text-amber-400">
+                        <i data-lucide="boxes"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3" data-pt="AI SEO Automation" data-en="AI SEO Automation">AI SEO Automation</h3>
-                    <p class="text-gray-400 text-sm mb-6" 
-                       data-pt="Geração de conteúdo otimizado para buscadores e análise de palavras-chave competitivas usando modelos de linguagem avançados."
-                       data-en="SEO-optimized content generation and competitive keyword analysis using advanced language models.">
-                       Geração de conteúdo otimizado para buscadores e análise de palavras-chave competitivas usando modelos de linguagem avançados.
-                    </p>
-                    <button onclick="window.location.href='https://wa.me/5551985339623?text=Quero+saber+mais+sobre+SEO+com+IA'" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
-                        <span data-pt="Otimizar meu site" data-en="Optimize my site">Otimizar meu site</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="glass p-8 rounded-3xl tech-card border border-white/5 group">
-                    <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center mb-6">
-                        <i data-lucide="message-square-dashed"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3" data-pt="Agente com IA para WebChat" data-en="AI Agent for WebChat">Agente com IA para WebChat</h3>
-                    <p class="text-gray-400 text-sm mb-6" 
-                       data-pt="Chatbot inteligente embutido no seu site. Responde dúvidas em tempo real, captura leads e faz triagem 24/7 de forma humanizada."
-                       data-en="Smart chatbot embedded in your website. Answers questions in real-time, captures leads, and performs humanized triage 24/7.">
-                       Chatbot inteligente embutido no seu site. Responde dúvidas em tempo real, captura leads e faz triagem 24/7 de forma humanizada.
-                    </p>
-                    <button onclick="window.location.href='https://wa.me/5551985339623?text=Quero+saber+mais+sobre+o+Agente+com+IA+para+WebChat'" class="text-blue-400 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all">
-                        <span data-pt="Quero no meu site" data-en="Get it for my site">Quero no meu site</span>
-                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </button>
+                    <h4 class="custom-group__title" data-pt="Apps & Operação" data-en="Apps & Operations">Apps & Operação</h4>
+                    <ul class="custom-group__list">
+                        <li data-pt="Clube / App para associações" data-en="Club / member app">Clube / App para associações</li>
+                        <li data-pt="Loja / App — farmácias, açougues e varejo" data-en="Store / app — pharmacies, butcher shops, retail">Loja / App — farmácias, açougues e varejo</li>
+                        <li data-pt="Sistema de OS e estoque" data-en="Work orders and inventory">Sistema de OS e estoque</li>
+                    </ul>
                 </div>
             </div>
+
+            <p class="text-center mt-8">
+                <a href="#contact" class="inline-flex items-center gap-2 text-blue-400 font-bold text-sm hover:gap-3 transition-all">
+                    <span data-pt="Tem outra necessidade? Fale conosco" data-en="Have another need? Talk to us">Tem outra necessidade? Fale conosco</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </p>
         </div>
     </section>
 
     <!-- Services Grid -->
-    <section id="services" class="py-24 px-6">
+    <section id="services" class="snap-section snap-section--loose timeline-section px-6 py-24" data-timeline-pt="Serviços" data-timeline-en="Services" data-timeline-es="Servicios">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold mb-4" data-pt="Especialidades & Consultoria" data-en="Expertise & Consulting">Especialidades & Consultoria</h2>
@@ -460,9 +1181,101 @@
         </div>
     </section>
 
+    <!-- CEO -->
+    <section id="ceo" class="snap-section timeline-section px-6 border-t border-white/5 bg-gray-900/20" data-timeline-pt="CEO" data-timeline-en="CEO" data-timeline-es="CEO">
+        <div class="max-w-6xl mx-auto w-full reveal">
+            <div class="grid lg:grid-cols-[11rem_1fr] gap-10 lg:gap-14 items-start">
+                <div class="flex flex-col items-center lg:items-start gap-4">
+                    <img src="me.jpeg" alt="Lucas Cezimbra Corrêa" width="176" height="176" class="ceo-photo" fetchpriority="high">
+                    <a href="https://www.linkedin.com/in/lucascezimbracorrea/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-blue-400 transition">
+                        <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-linkedin"/></svg>
+                        LinkedIn
+                    </a>
+                </div>
+                <div>
+                    <p class="mono text-xs uppercase tracking-[0.25em] text-blue-400 mb-4" data-pt="Mensagem do CEO" data-en="Message from the CEO">Mensagem do CEO</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-1">Lucas Cezimbra Corrêa</h2>
+                    <p class="text-blue-400 font-semibold mb-6" data-pt="CEO & Founder" data-en="CEO & Founder">CEO & Founder</p>
+                    <p class="text-lg text-gray-300 leading-relaxed mb-5"
+                       data-pt="Acredito que tecnologia de verdade não é hype — é conexão. Conexão entre pessoas, processos, dados e decisões. Foi com essa visão que construí a Cezimbra Corrêa: uma empresa que transforma complexidade em produtos claros, escaláveis e prontos para gerar resultado."
+                       data-en="I believe real technology isn't hype — it's connection. Connection between people, processes, data, and decisions. That's the vision behind Cezimbra Corrêa: a company that turns complexity into clear, scalable products built to deliver results.">
+                       Acredito que tecnologia de verdade não é hype — é conexão. Conexão entre pessoas, processos, dados e decisões. Foi com essa visão que construí a Cezimbra Corrêa: uma empresa que transforma complexidade em produtos claros, escaláveis e prontos para gerar resultado.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed mb-6"
+                       data-pt="Com mais de uma década liderando engenharia, DevOps e arquitetura de software, nossa missão é simples: entregar plataformas com IA que funcionam no mundo real — para clínicas, estúdios, órgãos públicos e qualquer operação que precise escalar com inteligência."
+                       data-en="With over a decade leading engineering, DevOps, and software architecture, our mission is simple: deliver AI platforms that work in the real world — for clinics, studios, public agencies, and any operation that needs to scale intelligently.">
+                       Com mais de uma década liderando engenharia, DevOps e arquitetura de software, nossa missão é simples: entregar plataformas com IA que funcionam no mundo real — para clínicas, estúdios, órgãos públicos e qualquer operação que precise escalar com inteligência.
+                    </p>
+                    <a href="#sobre-nos" class="inline-flex items-center gap-2 text-blue-400 font-bold text-sm hover:gap-3 transition-all">
+                        <span data-pt="Conheça nossa história" data-en="Learn our story">Conheça nossa história</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clientes & Parceiros -->
+    <section id="clients" class="snap-section timeline-section px-6 border-t border-white/5 bg-gray-900/20" data-timeline-pt="Clientes" data-timeline-en="Clients" data-timeline-es="Clientes">
+        <div class="max-w-5xl mx-auto w-full reveal">
+            <div class="text-center">
+                <p class="mono text-xs uppercase tracking-[0.25em] text-blue-400 mb-4" data-pt="Quem confia no nosso trabalho" data-en="Who trusts our work">Quem confia no nosso trabalho</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-4" data-pt="Empresas que já colaboraram conosco" data-en="Companies we've worked with">Empresas que já colaboraram conosco</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto"
+                   data-pt="De startups a operações globais — entregamos software, infraestrutura e IA para times que precisam de resultado."
+                   data-en="From startups to global operations — we deliver software, infrastructure, and AI for teams that need results.">
+                   De startups a operações globais — entregamos software, infraestrutura e IA para times que precisam de resultado.
+                </p>
+            </div>
+            <div class="clients-marquee">
+                <div class="marquee-container flex items-center gap-16 md:gap-24 px-4 w-max">
+                    <div class="flex items-center gap-16 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="shield-check" class="text-blue-500"></i> White Prompt</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="box" class="text-sky-500"></i> Box360</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="triangle" class="text-blue-400"></i> Z3</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="code-2" class="text-green-500"></i> BairesDev</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="hexagon" class="text-pink-500"></i> One</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="activity" class="text-yellow-500"></i> XChange Place</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="zap" class="text-orange-500"></i> Vela</span>
+                    </div>
+                    <div class="flex items-center gap-16 md:gap-24 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="shield-check" class="text-blue-500"></i> White Prompt</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="box" class="text-sky-500"></i> Box360</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="triangle" class="text-blue-400"></i> Z3</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="code-2" class="text-green-500"></i> BairesDev</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="hexagon" class="text-pink-500"></i> One</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="activity" class="text-yellow-500"></i> XChange Place</span>
+                        <span class="font-extrabold text-2xl tracking-tighter text-white flex items-center gap-2"><i data-lucide="zap" class="text-orange-500"></i> Vela</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Results Timeline -->
-    <section id="about" class="py-24 px-6 bg-gradient-to-b from-transparent via-blue-900/10 to-transparent relative overflow-hidden">
+    <section id="about" class="snap-section snap-section--loose timeline-section px-6 py-24 bg-gradient-to-b from-transparent via-blue-900/10 to-transparent relative overflow-hidden" data-timeline-pt="Sobre" data-timeline-en="About" data-timeline-es="Nosotros">
         <div class="max-w-5xl mx-auto relative">
+            <!-- Sobre nós -->
+            <div id="sobre-nos" class="mb-24 reveal">
+                <div class="text-center mb-12">
+                    <p class="mono text-xs uppercase tracking-[0.25em] text-blue-400 mb-4" data-pt="Sobre nós" data-en="About us">Sobre nós</p>
+                    <h2 class="text-4xl font-bold mb-4" data-pt="Uma década de engenharia a serviço do seu negócio" data-en="A decade of engineering at the service of your business" data-es="Una década de ingeniería al servicio de su negocio">Uma década de engenharia a serviço do seu negócio</h2>
+                </div>
+                <div class="glass rounded-3xl p-8 md:p-12 border border-white/5 max-w-3xl mx-auto text-center">
+                    <p class="text-gray-400 text-lg leading-relaxed mb-6"
+                       data-pt="Engenheiro de Software Senior & DevOps com +10 anos de experiência transformando ideias complexas em produtos escaláveis de alta performance. A Cezimbra Corrêa nasceu dessa trajetória: unir engenharia de ponta, visão de produto e execução para criar soluções que duram."
+                       data-en="Senior Software Engineer & DevOps with 10+ years of experience transforming complex ideas into high-performance scalable products. Cezimbra Corrêa was born from this journey: combining cutting-edge engineering, product vision, and execution to build solutions that last.">
+                       Engenheiro de Software Senior & DevOps com +10 anos de experiência transformando ideias complexas em produtos escaláveis de alta performance. A Cezimbra Corrêa nasceu dessa trajetória: unir engenharia de ponta, visão de produto e execução para criar soluções que duram.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-3 text-sm">
+                        <span class="glass px-4 py-2 rounded-full text-gray-300 border border-white/5" data-pt="Engenharia de Software" data-en="Software Engineering">Engenharia de Software</span>
+                        <span class="glass px-4 py-2 rounded-full text-gray-300 border border-white/5" data-pt="Cloud & DevOps" data-en="Cloud & DevOps">Cloud & DevOps</span>
+                        <span class="glass px-4 py-2 rounded-full text-gray-300 border border-white/5" data-pt="Agentes de IA" data-en="AI Agents">Agentes de IA</span>
+                        <span class="glass px-4 py-2 rounded-full text-gray-300 border border-white/5" data-pt="SaaS Delivery" data-en="SaaS Delivery">SaaS Delivery</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="text-center mb-20 reveal">
                 <h2 class="text-4xl font-bold mb-4" data-pt="Histórico de Entregas e Resultados" data-en="Track Record & Results">Histórico de Entregas e Resultados</h2>
                 <p class="text-gray-400" data-pt="10+ anos escalando plataformas e otimizando infraestruturas críticas." data-en="10+ years scaling platforms and optimizing critical infrastructures.">10+ anos escalando plataformas e otimizando infraestruturas críticas.</p>
@@ -477,7 +1290,7 @@
                 <div class="relative flex flex-col md:flex-row justify-between items-center mb-20 reveal w-full">
                     <div class="w-full md:w-[45%] pl-12 md:pl-0 md:text-right mb-6 md:mb-0">
                         <h3 class="text-2xl font-bold text-blue-400 mb-2" data-pt="Escalabilidade & Investimentos" data-en="Scalability & Investments">Escalabilidade & Investimentos</h3>
-                        <p class="font-mono text-xs text-purple-400 mb-4">XChange Place | White Prompt</p>
+                        <p class="font-mono text-xs text-sky-400 mb-4">XChange Place | White Prompt</p>
                         <p class="text-gray-400 text-sm leading-relaxed" data-pt="Engenharia full-stack e DevOps (AWS, ECS, Lambdas) em app internacional de investimentos. Arquitetura voltada para alta disponibilidade e segurança." data-en="Full-stack and DevOps engineering (AWS, ECS, Lambdas) for an international investment app. Architecture focused on high availability and security.">
                             Engenharia full-stack e DevOps (AWS, ECS, Lambdas) em app internacional de investimentos. Arquitetura voltada para alta disponibilidade e segurança.
                         </p>
@@ -494,15 +1307,15 @@
                 <!-- Node 2 -->
                 <div class="relative flex flex-col md:flex-row-reverse justify-between items-center mb-20 reveal w-full">
                     <div class="w-full md:w-[45%] pl-12 md:pl-0 md:text-left mb-6 md:mb-0">
-                        <h3 class="text-2xl font-bold text-purple-400 mb-2" data-pt="Modernização & Performance" data-en="Modernization & Performance">Modernização & Performance</h3>
+                        <h3 class="text-2xl font-bold text-sky-400 mb-2" data-pt="Modernização & Performance" data-en="Modernization & Performance">Modernização & Performance</h3>
                         <p class="font-mono text-xs text-blue-400 mb-4">Z3 | BairesDev</p>
                         <p class="text-gray-400 text-sm leading-relaxed" data-pt="Liderança na migração de legados para React e Ruby on Rails/Django. Melhoria drástica de UX/UI e criação de APIs RESTful altamente testadas." data-en="Led legacy migrations to React and Ruby on Rails/Django. Drastic UX/UI improvement and creation of highly tested RESTful APIs.">
                             Liderança na migração de legados para React e Ruby on Rails/Django. Melhoria drástica de UX/UI e criação de APIs RESTful altamente testadas.
                         </p>
                     </div>
-                    <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-purple-500 rounded-full border-4 border-[#030712] transform -translate-x-1/2 md:-translate-x-1/2 shadow-[0_0_15px_#8b5cf6]"></div>
+                    <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-sky-500 rounded-full border-4 border-[#030712] transform -translate-x-1/2 md:-translate-x-1/2 shadow-[0_0_15px_#0ea5e9]"></div>
                     <div class="w-full md:w-[45%] pl-12 md:pl-0 md:text-right">
-                        <div class="glass p-6 rounded-2xl border-r-4 md:border-l-0 border-l-4 border-purple-500 hover:scale-105 transition-transform">
+                        <div class="glass p-6 rounded-2xl border-r-4 md:border-l-0 border-l-4 border-sky-500 hover:scale-105 transition-transform">
                             <h4 class="text-3xl font-extrabold text-white mb-1">+1M</h4>
                             <p class="text-sm text-gray-400 font-bold" data-pt="Usuários suportados com 100% de testes" data-en="Users supported with 100% test coverage">Usuários suportados com 100% de testes</p>
                         </div>
@@ -530,8 +1343,8 @@
 
             <!-- CTA Timeline -->
             <div class="text-center mt-16 reveal">
-                <a href="https://wa.me/5551985339623?text=Quero+escalar+minha+operacao+com+tecnologia" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-purple-500/25 transition-all hover:scale-105">
-                    <i data-lucide="rocket" class="w-5 h-5"></i>
+                <a href="https://wa.me/5551985339623?text=Quero+escalar+minha+operacao+com+tecnologia" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-500/25 transition-all hover:scale-105">
+                    <svg class="wa-icon w-5 h-5" aria-hidden="true"><use href="#icon-whatsapp"/></svg>
                     <span data-pt="Quero escalar minha operação" data-en="I want to scale my operation">Quero escalar minha operação</span>
                 </a>
             </div>
@@ -539,11 +1352,11 @@
     </section>
 
     <!-- Reviews / Testimonials -->
-    <section class="py-24 px-6 relative">
+    <section id="reviews" class="snap-section snap-section--loose timeline-section px-6 py-24 relative" data-timeline-pt="Depoimentos" data-timeline-en="Testimonials" data-timeline-es="Testimonios">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 reveal">
-                <h2 class="text-4xl font-bold mb-4" data-pt="O que dizem sobre meu trabalho" data-en="What people say about my work">O que dizem sobre meu trabalho</h2>
-                <div class="h-1 w-20 bg-purple-600 rounded mx-auto mb-4"></div>
+                <h2 class="text-4xl font-bold mb-4" data-pt="Sobre nosso trabalho" data-en="About our work">Sobre nosso trabalho</h2>
+                <div class="h-1 w-20 bg-blue-600 rounded mx-auto mb-4"></div>
                 <p class="text-gray-400" data-pt="Feedback de parceiros, líderes e colegas de equipe." data-en="Feedback from partners, leaders, and teammates.">Feedback de parceiros, líderes e colegas de equipe.</p>
             </div>
 
@@ -567,10 +1380,10 @@
                 <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform" style="transition-delay: 100ms;">
                     <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 bg-purple-900/50 rounded-full flex items-center justify-center font-bold text-purple-400 border border-purple-500/30">GH</div>
+                        <div class="w-12 h-12 bg-sky-900/50 rounded-full flex items-center justify-center font-bold text-sky-400 border border-sky-500/30">GH</div>
                         <div>
                             <p class="font-bold text-sm text-white">Gabriel Hoff</p>
-                            <p class="text-xs text-purple-400">Engenheiro de Software</p>
+                            <p class="text-xs text-sky-400">Engenheiro de Software</p>
                         </div>
                     </div>
                     <p class="text-gray-400 text-sm italic" data-pt="&quot;Sua arquitetura é limpa e altamente escalável. Aprender e trabalhar lado a lado com as soluções que ele desenha foi uma experiência incrível.&quot;" data-en="&quot;His architecture is clean and highly scalable. Learning and working side by side with the solutions he designs was an amazing experience.&quot;">
@@ -612,10 +1425,10 @@
                 <div class="glass p-6 rounded-3xl border border-white/5 relative reveal hover:-translate-y-2 transition-transform">
                     <i data-lucide="quote" class="absolute top-6 right-6 text-gray-700 w-8 h-8 opacity-50"></i>
                     <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 bg-indigo-900/50 rounded-full flex items-center justify-center font-bold text-indigo-400 border border-indigo-500/30">EC</div>
+                        <div class="w-12 h-12 bg-slate-900/50 rounded-full flex items-center justify-center font-bold text-slate-300 border border-slate-500/30">EC</div>
                         <div>
                             <p class="font-bold text-sm text-white">Eduardo Casagrande</p>
-                            <p class="text-xs text-indigo-400">Ger. de Arquitetura da One</p>
+                            <p class="text-xs text-slate-400">Ger. de Arquitetura da One</p>
                         </div>
                     </div>
                     <p class="text-gray-400 text-sm italic" data-pt="&quot;Liderança técnica impecável e profundo conhecimento em cloud e DevOps. Sabe exatamente como conduzir uma equipe rumo a uma entrega ágil e de qualidade.&quot;" data-en="&quot;Impeccable technical leadership and deep knowledge in cloud and DevOps. Knows exactly how to lead a team towards agile and quality delivery.&quot;">
@@ -672,40 +1485,122 @@
     </section>
 
     <!-- Final CTA Section -->
-    <section class="py-20 px-6 border-t border-white/5 bg-[#030712]">
+    <section id="contact" class="snap-section timeline-section px-6 py-20 border-t border-white/5 bg-[#030712]" data-timeline-pt="Contato" data-timeline-en="Contact" data-timeline-es="Contacto">
         <div class="max-w-4xl mx-auto text-center glass p-12 rounded-[3rem] reveal border border-blue-500/20 shadow-[0_0_50px_rgba(59,130,246,0.1)]">
             <h2 class="text-3xl md:text-5xl font-extrabold mb-6" data-pt="Pronto para construir o próximo nível?" data-en="Ready to build the next level?">Pronto para construir o próximo nível?</h2>
-            <p class="text-gray-400 mb-10 text-lg" data-pt="De automações com IA até infraestruturas cloud resilientes, eu posso ajudar sua empresa a escalar de forma segura e eficiente." data-en="From AI automations to resilient cloud infrastructures, I can help your company scale securely and efficiently.">
+            <p class="text-gray-400 mb-10 text-lg" data-pt="De automações com IA até infraestruturas cloud resilientes, eu posso ajudar sua empresa a escalar de forma segura e eficiente." data-en="From AI automation to resilient cloud infrastructure, we help your company scale securely and efficiently." data-es="Desde automatizaciones con IA hasta infraestructuras cloud resilientes, podemos ayudar a su empresa a escalar de forma segura y eficiente.">
                 De automações com IA até infraestruturas cloud resilientes, eu posso ajudar sua empresa a escalar de forma segura e eficiente.
             </p>
             <a href="https://wa.me/5551985339623?text=Ola,+gostaria+de+agendar+uma+conversa+sobre+os+seus+servicos" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 bg-white text-black hover:bg-blue-500 hover:text-white px-10 py-5 rounded-2xl font-bold text-lg transition-all w-full md:w-auto shadow-lg hover:shadow-xl hover:scale-105">
-                <i data-lucide="message-square" class="w-6 h-6"></i>
-                <span data-pt="Falar com o Especialista" data-en="Talk to the Expert">Falar com o Especialista</span>
+                <svg class="wa-icon w-6 h-6" aria-hidden="true"><use href="#icon-whatsapp"/></svg>
+                <span data-pt="Falar com o Especialista" data-en="Talk to us" data-es="Hablar con nosotros">Falar com o Especialista</span>
             </a>
             <p class="text-gray-500 text-sm mt-4" data-pt="Resposta em até 24h · Consultoria sem compromisso" data-en="Reply within 24h · No-obligation consultation">Resposta em até 24h · Consultoria sem compromisso</p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-white/5 text-center">
-        <div class="max-w-7xl mx-auto px-6">
-            <p class="text-gray-500 text-sm mb-4">&copy; 2025 Cezimbra Corrêa - Novo Hamburgo, RS, Brasil</p>
-            <div class="flex justify-center gap-6">
-                <a href="https://github.com/lucascezimbracorrea" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition">GitHub</a>
-                <a href="https://www.linkedin.com/in/lucascezimbracorrea/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition">LinkedIn</a>
-                <a href="mailto:lucascezimbracorrea@gmail.com" class="hover:text-blue-400 transition">Email</a>
+    <footer id="footer" class="site-footer snap-section snap-section--compact timeline-section border-t border-white/5 bg-[#030712]/95 backdrop-blur-sm" data-timeline-pt="Rodapé" data-timeline-en="Footer" data-timeline-es="Pie">
+        <div class="site-footer__glow" aria-hidden="true"></div>
+        <div class="max-w-7xl mx-auto px-6 py-14 lg:py-16 relative z-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-12">
+                <div class="lg:col-span-4">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="flex -space-x-3">
+                            <div class="w-9 h-9 bg-[#3b82f6] rounded-[0.35rem] flex items-center justify-center font-extrabold text-white text-lg z-10 shadow-lg">C</div>
+                            <div class="w-9 h-9 bg-[#1d4ed8] rounded-[0.35rem] flex items-center justify-center font-extrabold text-white text-lg shadow-lg">C</div>
+                        </div>
+                        <span class="font-bold tracking-tighter text-lg uppercase">CEZIMBRA<span class="text-[#3b82f6]">CORRÊA</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed max-w-xs mb-6"
+                       data-pt="Engenharia de software, cloud e IA para empresas que precisam escalar com segurança."
+                       data-en="Software engineering, cloud, and AI for companies that need to scale securely."
+                       data-es="Ingeniería de software, cloud e IA para empresas que necesitan escalar con seguridad.">
+                        Engenharia de software, cloud e IA para empresas que precisam escalar com segurança.
+                    </p>
+                    <a href="https://wa.me/5551985339623?text=Ola,+gostaria+de+agendar+uma+conversa+sobre+os+seus+servicos" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-bold text-blue-400 hover:text-blue-300 transition">
+                        <svg class="wa-icon w-4 h-4" aria-hidden="true"><use href="#icon-whatsapp"/></svg>
+                        <span data-pt="Iniciar conversa" data-en="Start a conversation" data-es="Iniciar conversación">Iniciar conversa</span>
+                        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <p class="site-footer__heading" data-pt="Navegação" data-en="Navigation" data-es="Navegación">Navegação</p>
+                    <ul class="space-y-2.5">
+                        <li><a href="#home" class="site-footer__link" data-pt="Empresa" data-en="Company">Empresa</a></li>
+                        <li><a href="#products" class="site-footer__link" data-pt="SaaS & IA" data-en="SaaS & AI">SaaS & IA</a></li>
+                        <li><a href="#services" class="site-footer__link" data-pt="Serviços" data-en="Services">Serviços</a></li>
+                        <li><a href="#about" class="site-footer__link" data-pt="Sobre" data-en="About">Sobre</a></li>
+                        <li><a href="#reviews" class="site-footer__link" data-pt="Depoimentos" data-en="Testimonials" data-es="Testimonios">Depoimentos</a></li>
+                        <li><a href="#contact" class="site-footer__link" data-pt="Contato" data-en="Contact">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <p class="site-footer__heading" data-pt="Plataformas" data-en="Platforms" data-es="Plataformas">Plataformas</p>
+                    <ul class="space-y-2.5">
+                        <li><a href="#product-aura" class="site-footer__link">AURA Aesthetic</a></li>
+                        <li><a href="#product-noclique" class="site-footer__link">NoClique</a></li>
+                        <li><a href="#product-audoria" class="site-footer__link">Audória</a></li>
+                        <li><a href="#products-custom" class="site-footer__link" data-pt="Sob medida" data-en="Custom built">Sob medida</a></li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <p class="site-footer__heading" data-pt="Contato" data-en="Contact" data-es="Contacto">Contato</p>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="mailto:lucascezimbracorrea@gmail.com" class="site-footer__link inline-flex items-center gap-2.5">
+                                <i data-lucide="mail" class="w-4 h-4 text-blue-500 shrink-0"></i>
+                                lucascezimbracorrea@gmail.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://wa.me/5551985339623" target="_blank" rel="noopener noreferrer" class="site-footer__link inline-flex items-center gap-2.5">
+                                <svg class="wa-icon w-4 h-4 shrink-0" aria-hidden="true"><use href="#icon-whatsapp"/></svg>
+                                +55 (51) 98533-9623
+                            </a>
+                        </li>
+                        <li class="site-footer__link inline-flex items-start gap-2.5">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-blue-500 shrink-0 mt-0.5"></i>
+                            <span data-pt="RS · Brasil" data-en="RS · Brazil" data-es="RS · Brasil">RS · Brasil</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-white/5">
+                <div class="text-center md:text-left">
+                    <p class="text-gray-500 text-sm">
+                        &copy; <span id="footer-year"></span> Cezimbra Corrêa.
+                        <span data-pt="Todos os direitos reservados." data-en="All rights reserved." data-es="Todos los derechos reservados.">Todos os direitos reservados.</span>
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="https://github.com/lucascezimbracorrea" target="_blank" rel="noopener noreferrer" class="site-footer__social" aria-label="GitHub">
+                        <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-github"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/lucascezimbracorrea/" target="_blank" rel="noopener noreferrer" class="site-footer__social" aria-label="LinkedIn">
+                        <svg class="w-4 h-4" aria-hidden="true"><use href="#icon-linkedin"/></svg>
+                    </a>
+                    <a href="mailto:lucascezimbracorrea@gmail.com" class="site-footer__social" aria-label="Email">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
 
     <!-- WhatsApp Floating -->
     <a href="https://wa.me/5551985339623" target="_blank" rel="noopener noreferrer" class="fixed bottom-8 right-8 bg-green-500 hover:bg-green-600 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl z-[60] floating-wa">
-        <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
+        <svg class="wa-icon w-8 h-8 text-white" aria-hidden="true"><use href="#icon-whatsapp"/></svg>
     </a>
 
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
 
         // Mobile Menu
         function toggleMobileMenu() {
@@ -717,16 +1612,321 @@
             lucide.createIcons();
         }
 
-        // Language Management
-        let currentLang = 'pt';
-        function toggleLang() {
-            currentLang = currentLang === 'pt' ? 'en' : 'pt';
-            document.querySelectorAll('[data-pt]').forEach(el => {
-                const val = el.getAttribute('data-' + currentLang);
-                if (val) el.innerText = val;
+        function decorateWhatsApp(root = document.body) {
+            const icon = '<svg class="wa-icon inline-block w-[1em] h-[1em] text-[#25D366] align-[-0.15em]" aria-hidden="true"><use href="#icon-whatsapp"/></svg>';
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    if (!node.nodeValue.includes('WhatsApp')) return NodeFilter.FILTER_REJECT;
+                    const parent = node.parentElement;
+                    if (!parent || parent.closest('script, style, [data-wa-skip]')) return NodeFilter.FILTER_REJECT;
+                    if (parent.closest('.wa-decorated')) return NodeFilter.FILTER_REJECT;
+                    return NodeFilter.FILTER_ACCEPT;
+                }
             });
-            document.getElementById('lang-label').innerText = currentLang === 'pt' ? 'EN' : 'PT';
+
+            const nodes = [];
+            while (walker.nextNode()) nodes.push(walker.currentNode);
+
+            nodes.forEach(node => {
+                const parts = node.nodeValue.split(/(WhatsApp)/g);
+                const frag = document.createDocumentFragment();
+                parts.forEach(part => {
+                    if (part === 'WhatsApp') {
+                        const wrap = document.createElement('span');
+                        wrap.className = 'wa-decorated inline-flex items-center gap-0.5';
+                        wrap.innerHTML = icon;
+                        wrap.append(' WhatsApp');
+                        frag.appendChild(wrap);
+                    } else if (part) {
+                        frag.appendChild(document.createTextNode(part));
+                    }
+                });
+                node.parentNode.replaceChild(frag, node);
+            });
         }
+
+        // Language Management
+        const I18N_ES = {
+  "Empresa": "Empresa",
+  "Company": "Empresa",
+  "SaaS & IA": "SaaS e IA",
+  "Serviços": "Servicios",
+  "Sobre": "Nosotros",
+  "Contato": "Contacto",
+  "Tecnologia que conecta negócios": "Tecnología que conecta negocios",
+  "Software e IA que": "Software e IA que",
+  "escalam sua operação": "escalan su operación",
+  "Da arquitetura ao deploy, entregamos software e sistemas com IA que escalam com o seu negócio. Engenharia, produto e resultado em um só time — para quem precisa crescer rápido sem comprometer a operação.": "De la arquitectura al deploy, entregamos software y sistemas con IA que escalan con su negocio. Ingeniería, producto y resultados en un solo equipo — para quien necesita crecer rápido sin comprometer la operación.",
+  "Conheça nossas plataformas": "Conozca nuestras plataformas",
+  "Falar com a empresa": "Hablar con la empresa",
+  "Entregues": "Entregados",
+  "SaaS ativos": "SaaS activos",
+  "Anos": "Años",
+  "Uptime": "Uptime",
+  "Produtos em produção": "Productos en producción",
+  "Construímos software que resolve mercados reais": "Construimos software que resuelve mercados reales",
+  "Mercado": "Mercado",
+  "Produto": "Producto",
+  "IA integrada": "IA integrada",
+  "Em produção": "En producción",
+  "Parcerias & co-criação": "Alianzas y co-creación",
+  "Quer construir um sistema juntos?": "¿Quieren construir un sistema juntos?",
+  "Se você tem um mercado, uma base de clientes ou uma ideia validada — podemos co-criar a plataforma, colocar em produção e escalar com IA. Do MVP ao produto maduro.": "Si tienen un mercado, una base de clientes o una idea validada — podemos co-crear la plataforma, ponerla en producción y escalar con IA. Del MVP al producto maduro.",
+  "Co-desenvolvimento": "Co-desarrollo",
+  "White-label": "White-label",
+  "Parceria comercial": "Alianza comercial",
+  "Revenda": "Reventa",
+  "Agendar uma conversa": "Agendar una conversación",
+  "Falar sobre parceria": "Hablar sobre alianza",
+  "Conheça nossas plataformas abaixo": "Conozca nuestras plataformas abajo",
+  "Clínicas & pós-graduação": "Clínicas y posgrado",
+  "A plataforma inteligente com IA para clínicas de estética e instituições de pós-graduação.": "La plataforma inteligente con IA para clínicas de estética e instituciones de posgrado.",
+  "Gestão de leads, clientes, alunos, turmas, notas, cursos e muito mais em um só lugar. Agentes de IA no WhatsApp e no site atendem 24 horas, qualificam interesse e conduzem até o agendamento ou matrícula.": "Gestión de leads, clientes, alumnos, clases, notas, cursos y más en un solo lugar. Agentes de IA en WhatsApp y en el sitio atienden 24 horas, califican interés y conducen hasta la cita o matrícula.",
+  "Gestão de leads, clientes e pacientes": "Gestión de leads, clientes y pacientes",
+  "Alunos, turmas, notas e cursos": "Alumnos, clases, notas y cursos",
+  "Agentes de IA no WhatsApp e WebChat": "Agentes de IA en WhatsApp y WebChat",
+  "Conhecer a plataforma": "Conocer la plataforma",
+  "O CRM com IA que fotógrafos e estúdios usam para vender mais ensaios e organizar toda a operação.": "El CRM con IA que fotógrafos y estudios usan para vender más sesiones y organizar toda la operación.",
+  "Automatiza orçamentos, follow-ups e agendamentos. Seus agentes de IA respondem clientes e liberam você para focar em criar e entregar trabalhos incríveis.": "Automatiza presupuestos, seguimientos y citas. Sus agentes de IA responden clientes y le liberan para crear y entregar trabajos increíbles.",
+  "CRM pensado para fotógrafos e estúdios": "CRM pensado para fotógrafos y estudios",
+  "Agentes de IA para atendimento e vendas": "Agentes de IA para atención y ventas",
+  "Gestão de leads, clientes e agenda": "Gestión de leads, clientes y agenda",
+  "Fotógrafos & estúdios": "Fotógrafos y estudios",
+  "Empresas & setor público": "Empresas y sector público",
+  "A plataforma de ouvidoria e atendimento que organiza manifestações, acelera respostas e fortalece a confiança com cidadãos e clientes.": "La plataforma de atención al ciudadano que organiza manifestaciones, acelera respuestas y fortalece la confianza con ciudadanos y clientes.",
+  "IA para triagem, pré-análise e atendimento via WhatsApp. Ajuda prefeituras, câmaras e empresas a responder com transparência e conformidade com a LGPD.": "IA para triaje, pre-análisis y atención vía WhatsApp. Ayuda a municipios, cámaras y empresas a responder con transparencia y cumplimiento normativo.",
+  "Ouvidoria com dashboard em tempo real": "Atención al ciudadano con dashboard en tiempo real",
+  "IA para triagem e pré-análise": "IA para triaje y pre-análisis",
+  "Segurança, LGPD e relatórios": "Seguridad, privacidad y reportes",
+  "Sob medida": "A medida",
+  "Sistemas para o seu negócio": "Sistemas para su negocio",
+  "Desenvolvemos plataformas sob medida — do CRM à telefonia, apps e operação.": "Desarrollamos plataformas a medida — del CRM a telefonía, apps y operación.",
+  "Gestão & CRM": "Gestión y CRM",
+  "CRM — agendamento, assinatura e campanhas": "CRM — citas, suscripciones y campañas",
+  "Landing pages integradas": "Landing pages integradas",
+  "Agentes com IA no atendimento": "Agentes con IA en atención",
+  "Telefonia": "Telefonía",
+  "Cloud Softphone com sua marca": "Cloud Softphone con su marca",
+  "Telefonia para hotéis": "Telefonía para hoteles",
+  "Agente IA — WhatsApp e telefonia": "Agente IA — WhatsApp y telefonía",
+  "Apps & Operação": "Apps y Operación",
+  "Clube / App para associações": "Club / App para asociaciones",
+  "Loja / App — farmácias, açougues e varejo": "Tienda / App — farmacias, carnicerías y retail",
+  "Sistema de OS e estoque": "Sistema de órdenes de servicio e inventario",
+  "Tem outra necessidade? Fale conosco": "¿Otra necesidad? Hable con nosotros",
+  "Especialidades & Consultoria": "Especialidades y Consultoría",
+  "Soluções sob medida para empresas que buscam excelência técnica.": "Soluciones a medida para empresas que buscan excelencia técnica.",
+  "Cloud & DevOps": "Cloud y DevOps",
+  "Arq. Software": "Arq. Software",
+  "Ouvidoria": "Atención al ciudadano",
+  "Landing Pages": "Landing Pages",
+  "SaaS Delivery": "Entrega SaaS",
+  "Mensagem do CEO": "Mensaje del CEO",
+  "CEO & Founder": "CEO y Fundador",
+  "Acredito que tecnologia de verdade não é hype — é conexão. Conexão entre pessoas, processos, dados e decisões. Foi com essa visão que construí a Cezimbra Corrêa: uma empresa que transforma complexidade em produtos claros, escaláveis e prontos para gerar resultado.": "Creo que la tecnología de verdad no es hype — es conexión. Conexión entre personas, procesos, datos y decisiones. Con esa visión construí Cezimbra Corrêa: una empresa que transforma complejidad en productos claros, escalables y listos para generar resultados.",
+  "Com mais de uma década liderando engenharia, DevOps e arquitetura de software, nossa missão é simples: entregar plataformas com IA que funcionam no mundo real — para clínicas, estúdios, órgãos públicos e qualquer operação que precise escalar com inteligência.": "Con más de una década liderando ingeniería, DevOps y arquitectura de software, nuestra misión es simple: entregar plataformas con IA que funcionan en el mundo real — para clínicas, estudios, organismos públicos y cualquier operación que necesite escalar con inteligencia.",
+  "Conheça nossa história": "Conozca nuestra historia",
+  "Quem confia no nosso trabalho": "Quienes confían en nuestro trabajo",
+  "Empresas que já colaboraram conosco": "Empresas con las que ya colaboramos",
+  "De startups a operações globais — entregamos software, infraestrutura e IA para times que precisam de resultado.": "De startups a operaciones globales — entregamos software, infraestructura e IA para equipos que necesitan resultados.",
+  "Sobre nós": "Sobre nosotros",
+  "Uma década de engenharia a serviço do seu negócio": "Una década de ingeniería al servicio de su negocio",
+  "Engenheiro de Software Senior & DevOps com +10 anos de experiência transformando ideias complexas em produtos escaláveis de alta performance. A Cezimbra Corrêa nasceu dessa trajetória: unir engenharia de ponta, visão de produto e execução para criar soluções que duram.": "Ingeniero de Software Senior y DevOps con más de 10 años de experiencia transformando ideas complejas en productos escalables de alto rendimiento. Cezimbra Corrêa nació de esa trayectoria: unir ingeniería de punta, visión de producto y ejecución para crear soluciones que perduran.",
+  "Engenharia de Software": "Ingeniería de Software",
+  "Agentes de IA": "Agentes de IA",
+  "Histórico de Entregas e Resultados": "Historial de Entregas y Resultados",
+  "10+ anos escalando plataformas e otimizando infraestruturas críticas.": "Más de 10 años escalando plataformas y optimizando infraestructuras críticas.",
+  "Escalabilidade & Investimentos": "Escalabilidad e Inversiones",
+  "Engenharia full-stack e DevOps (AWS, ECS, Lambdas) em app internacional de investimentos. Arquitetura voltada para alta disponibilidade e segurança.": "Ingeniería full-stack y DevOps (AWS, ECS, Lambdas) en app internacional de inversiones. Arquitectura orientada a alta disponibilidad y seguridad.",
+  "Deployments sem downtime (CI/CD)": "Deploys sin downtime (CI/CD)",
+  "Modernização & Performance": "Modernización y Rendimiento",
+  "Liderança na migração de legados para React e Ruby on Rails/Django. Melhoria drástica de UX/UI e criação de APIs RESTful altamente testadas.": "Liderazgo en migración de legados a React y Ruby on Rails/Django. Mejora drástica de UX/UI y creación de APIs RESTful altamente testeadas.",
+  "Usuários suportados com 100% de testes": "Usuarios soportados con 100% de tests",
+  "Alta Volumetria & Mensageria": "Alto Volumen y Mensajería",
+  "Co-fundador e Arquiteto de plataforma inteligente de mensagens (WhatsApp/SMS/Bots) e sistemas de CRM para o setor de telecom.": "Co-fundador y Arquitecto de plataforma inteligente de mensajes (WhatsApp/SMS/Bots) y sistemas CRM para el sector telecom.",
+  "Mensagens processadas diariamente": "Mensajes procesados diariamente",
+  "Quero escalar minha operação": "Quiero escalar mi operación",
+  "Sobre nosso trabalho": "Sobre nuestro trabajo",
+  "Feedback de parceiros, líderes e colegas de equipe.": "Feedback de socios, líderes y colegas de equipo.",
+  "Pronto para construir o próximo nível?": "¿Listos para construir el siguiente nivel?",
+  "De automações com IA até infraestruturas cloud resilientes, eu posso ajudar sua empresa a escalar de forma segura e eficiente.": "Desde automatizaciones con IA hasta infraestructuras cloud resilientes, podemos ayudar a su empresa a escalar de forma segura y eficiente.",
+  "Falar com o Especialista": "Hablar con nosotros",
+  "Resposta em até 24h · Consultoria sem compromisso": "Respuesta en hasta 24h · Consultoría sin compromiso",
+  "\"O Lucas é um desenvolvedor formidável. Sua habilidade em resolver problemas complexos no backend com Node e Python impressiona qualquer equipe.\"": "\"Lucas es un desarrollador formidable. Su habilidad para resolver problemas complejos en backend con Node y Python impresiona a cualquier equipo.\"",
+  "&quot;O Lucas é um desenvolvedor formidável. Sua habilidade em resolver problemas complexos no backend com Node e Python impressiona qualquer equipe.&quot;": "&quot;Lucas es un desarrollador formidable. Su habilidad para resolver problemas complejos en backend con Node y Python impresiona a cualquier equipo.&quot;",
+  "\"Sua arquitetura é limpa e altamente escalável. Aprender e trabalhar lado a lado com as soluções que ele desenha foi uma experiência incrível.\"": "\"Su arquitectura es limpia y altamente escalable. Aprender y trabajar codo a codo con las soluciones que diseña fue una experiencia increíble.\"",
+  "&quot;Sua arquitetura é limpa e altamente escalável. Aprender e trabalhar lado a lado com as soluções que ele desenha foi uma experiência incrível.&quot;": "&quot;Su arquitectura es limpia y altamente escalable. Aprender y trabajar codo a codo con las soluciones que diseña fue una experiencia increíble.&quot;",
+  "\"Visão técnica fenomenal, sempre focado em resolver problemas de negócio alinhados com a melhor tecnologia disponível. Um parceiro de valor inestimável.\"": "\"Visión técnica fenomenal, siempre enfocado en resolver problemas de negocio alineados con la mejor tecnología disponible. Un socio de valor inestimable.\"",
+  "&quot;Visão técnica fenomenal, sempre focado em resolver problemas de negócio alinhados com a melhor tecnologia disponível. Um parceiro de valor inestimável.&quot;": "&quot;Visión técnica fenomenal, siempre enfocado en resolver problemas de negocio alineados con la mejor tecnología disponible. Un socio de valor inestimable.&quot;",
+  "\"Entregou resultados excepcionais na nossa infraestrutura, automatizando processos que elevaram a eficiência do nosso produto a outro patamar.\"": "\"Entregó resultados excepcionales en nuestra infraestructura, automatizando procesos que elevaron la eficiencia de nuestro producto a otro nivel.\"",
+  "&quot;Entregou resultados excepcionais na nossa infraestrutura, automatizando processos que elevaram a eficiência do nosso produto a outro patamar.&quot;": "&quot;Entregó resultados excepcionales en nuestra infraestructura, automatizando procesos que elevaron la eficiencia de nuestro producto a otro nivel.&quot;",
+  "\"Liderança técnica impecável e profundo conhecimento em cloud e DevOps. Sabe exatamente como conduzir uma equipe rumo a uma entrega ágil e de qualidade.\"": "\"Liderazgo técnico impecable y profundo conocimiento en cloud y DevOps. Sabe exactamente cómo conducir un equipo hacia una entrega ágil y de calidad.\"",
+  "&quot;Liderança técnica impecável e profundo conhecimento em cloud e DevOps. Sabe exatamente como conduzir uma equipe rumo a uma entrega ágil e de qualidade.&quot;": "&quot;Liderazgo técnico impecable y profundo conocimiento en cloud y DevOps. Sabe exactamente cómo conducir un equipo hacia una entrega ágil y de calidad.&quot;",
+  "\"Fundamental para a escala da nossa plataforma. O Lucas é um profissional brilhante com uma visão estritamente voltada para o sucesso do business.\"": "\"Fundamental para la escala de nuestra plataforma. Lucas es un profesional brillante con una visión estrictamente orientada al éxito del negocio.\"",
+  "&quot;Fundamental para a escala da nossa plataforma. O Lucas é um profissional brilhante com uma visão estritamente voltada para o sucesso do business.&quot;": "&quot;Fundamental para la escala de nuestra plataforma. Lucas es un profesional brillante con una visión estrictamente orientada al éxito del negocio.&quot;",
+  "\"Transformou nossa infraestrutura da noite para o dia, otimizando nossos custos na nuvem e garantindo uma performance e estabilidade sem precedentes.\"": "\"Transformó nuestra infraestructura de la noche a la mañana, optimizando nuestros costos en la nube y garantizando un rendimiento y estabilidad sin precedentes.\"",
+  "&quot;Transformou nossa infraestrutura da noite para o dia, otimizando nossos custos na nuvem e garantindo uma performance e estabilidade sem precedentes.&quot;": "&quot;Transformó nuestra infraestructura de la noche a la mañana, optimizando nuestros costos en la nube y garantizando un rendimiento y estabilidad sin precedentes.&quot;",
+  "\"Como QA, é um alívio validar os entregáveis do Lucas. O código é de altíssima qualidade, com cobertura de testes e prevenção de bugs excepcional.\"": "\"Como QA, es un alivio validar los entregables de Lucas. El código es de altísima calidad, con cobertura de tests y prevención de bugs excepcional.\"",
+  "&quot;Como QA, é um alívio validar os entregáveis do Lucas. O código é de altíssima qualidade, com cobertura de testes e prevenção de bugs excepcional.&quot;": "&quot;Como QA, es un alivio validar los entregables de Lucas. El código es de altísima calidad, con cobertura de tests y prevención de bugs excepcional.&quot;",
+  "Engenharia de software, cloud e IA para empresas que precisam escalar com segurança.": "Ingeniería de software, cloud e IA para empresas que necesitan escalar con seguridad.",
+  "Iniciar conversa": "Iniciar conversación",
+  "Navegação": "Navegación",
+  "Navigation": "Navegación",
+  "Depoimentos": "Testimonios",
+  "Testimonials": "Testimonios",
+  "Plataformas": "Plataformas",
+  "Platforms": "Plataformas",
+  "RS · Brasil": "RS · Brasil",
+  "RS · Brazil": "RS · Brasil",
+  "Todos os direitos reservados.": "Todos los derechos reservados.",
+  "All rights reserved.": "Todos los derechos reservados.",
+  "Start a conversation": "Iniciar conversación",
+};
+
+        const PAGE_META = {
+            pt: {
+                title: 'Cezimbra Corrêa | Engenharia de Software, Cloud & IA',
+                description: 'Empresa de tecnologia especializada em software, SaaS, cloud, DevOps e agentes de IA. Plataformas escaláveis para o seu negócio.',
+                htmlLang: 'pt-BR'
+            },
+            en: {
+                title: 'Cezimbra Corrêa | Software Engineering, Cloud & AI',
+                description: 'Technology company specialized in software, SaaS, cloud, DevOps, and AI agents. Scalable platforms built for your business.',
+                htmlLang: 'en'
+            },
+            es: {
+                title: 'Cezimbra Corrêa | Ingeniería de Software, Cloud e IA',
+                description: 'Empresa de tecnología especializada en software, SaaS, cloud, DevOps y agentes de IA. Plataformas escalables para su negocio.',
+                htmlLang: 'es'
+            }
+        };
+
+        const TIMELINE_LANG_KEY = { pt: 'timelinePt', en: 'timelineEn', es: 'timelineEs' };
+
+        let currentLang = localStorage.getItem('cc-lang') || 'pt';
+
+        function getTranslation(el, lang) {
+            const direct = el.getAttribute('data-' + lang);
+            if (direct) return direct;
+            if (lang === 'es') {
+                const pt = el.getAttribute('data-pt');
+                if (pt && I18N_ES[pt]) return I18N_ES[pt];
+            }
+            return el.getAttribute('data-pt') || '';
+        }
+
+        function updateLangSwitcher() {
+            document.querySelectorAll('.lang-switcher__btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === currentLang);
+            });
+        }
+
+        function setLang(lang) {
+            if (!['pt', 'en', 'es'].includes(lang)) return;
+            currentLang = lang;
+            localStorage.setItem('cc-lang', lang);
+
+            document.querySelectorAll('[data-pt]').forEach(el => {
+                const val = getTranslation(el, lang);
+                if (val) el.textContent = val;
+            });
+
+            const meta = PAGE_META[lang];
+            if (meta) {
+                document.documentElement.lang = meta.htmlLang;
+                document.title = meta.title;
+                const desc = document.querySelector('meta[name="description"]');
+                if (desc) desc.setAttribute('content', meta.description);
+            }
+
+            updateLangSwitcher();
+            decorateWhatsApp();
+            if (activeTimelineSection) {
+                timelineTitle.textContent = getTimelineLabel(activeTimelineSection);
+            }
+            refreshTimelineDotLabels();
+        }
+
+        // Scroll timeline
+        const timelineSections = document.querySelectorAll('.timeline-section');
+        const timelineDotsContainer = document.querySelector('.scroll-timeline__dots');
+        const timelineTitle = document.getElementById('scroll-timeline-title');
+        let activeTimelineSection = timelineSections[0] || null;
+
+        function getTimelineLabel(section) {
+            const key = TIMELINE_LANG_KEY[currentLang] || 'timelinePt';
+            return section.dataset[key] || section.dataset.timelinePt || '';
+        }
+
+        function setActiveTimelineSection(section) {
+            if (!section) return;
+            activeTimelineSection = section;
+            timelineTitle.textContent = getTimelineLabel(section);
+            const index = [...timelineSections].indexOf(section);
+            timelineDotsContainer.querySelectorAll('.scroll-timeline__dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        timelineSections.forEach((section) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'scroll-timeline__dot';
+            dot.dataset.timelineSection = section.id || '';
+            dot.setAttribute('aria-label', getTimelineLabel(section));
+            dot.addEventListener('click', () => section.scrollIntoView({ behavior: 'smooth' }));
+            timelineDotsContainer.appendChild(dot);
+        });
+
+        function refreshTimelineDotLabels() {
+            timelineDotsContainer.querySelectorAll('.scroll-timeline__dot').forEach((dot) => {
+                const section = document.getElementById(dot.dataset.timelineSection);
+                if (section) dot.setAttribute('aria-label', getTimelineLabel(section));
+            });
+        }
+
+        function updateActiveTimelineOnScroll() {
+            if (!timelineSections.length) return;
+
+            const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80;
+            if (nearBottom) {
+                setActiveTimelineSection(timelineSections[timelineSections.length - 1]);
+                return;
+            }
+
+            const viewportCenter = window.innerHeight / 2;
+            let closest = timelineSections[0];
+            let minDistance = Infinity;
+
+            timelineSections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const sectionCenter = rect.top + rect.height / 2;
+                const distance = Math.abs(sectionCenter - viewportCenter);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest = section;
+                }
+            });
+
+            setActiveTimelineSection(closest);
+        }
+
+        let timelineTicking = false;
+        function onScrollTimelineUpdate() {
+            if (timelineTicking) return;
+            timelineTicking = true;
+            requestAnimationFrame(() => {
+                updateActiveTimelineOnScroll();
+                timelineTicking = false;
+            });
+        }
+
+        window.addEventListener('scroll', onScrollTimelineUpdate, { passive: true });
+        window.addEventListener('resize', onScrollTimelineUpdate);
+        window.addEventListener('scrollend', updateActiveTimelineOnScroll, { passive: true });
+        updateActiveTimelineOnScroll();
+
+        setLang(currentLang);
 
         // Animated Background
         const canvas = document.getElementById('canvas-bg');
@@ -797,6 +1997,116 @@
         initParticles();
         draw();
 
+        // Hero mind network
+        const mindCanvas = document.getElementById('hero-mind-canvas');
+        if (mindCanvas) {
+            const mctx = mindCanvas.getContext('2d');
+            const mindLabels = {
+                pt: {
+                    engineer: 'Engenheiro',
+                    architect: 'Arquiteto',
+                    devops: 'DevOps',
+                    product: 'Produto',
+                    ai: 'IA',
+                    scale: 'Escala'
+                },
+                en: {
+                    engineer: 'Engineer',
+                    architect: 'Architect',
+                    devops: 'DevOps',
+                    product: 'Product',
+                    ai: 'AI',
+                    scale: 'Scale'
+                },
+                es: {
+                    engineer: 'Ingeniero',
+                    architect: 'Arquitecto',
+                    devops: 'DevOps',
+                    product: 'Producto',
+                    ai: 'IA',
+                    scale: 'Escala'
+                }
+            };
+            const mindNodes = [
+                { key: 'engineer', x: 0.5, y: 0.12, r: 9 },
+                { key: 'architect', x: 0.82, y: 0.28, r: 9 },
+                { key: 'devops', x: 0.78, y: 0.72, r: 9 },
+                { key: 'product', x: 0.5, y: 0.88, r: 9 },
+                { key: 'ai', x: 0.22, y: 0.72, r: 9 },
+                { key: 'scale', x: 0.18, y: 0.28, r: 9 }
+            ];
+            const mindEdges = [
+                [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0],
+                [0, 3], [1, 4], [2, 5]
+            ];
+            let mindTime = 0;
+
+            function resizeMind() {
+                const rect = mindCanvas.parentElement.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                mindCanvas.width = rect.width * dpr;
+                mindCanvas.height = rect.height * dpr;
+                mctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            function drawMind() {
+                const w = mindCanvas.parentElement.clientWidth;
+                const h = mindCanvas.parentElement.clientHeight;
+                mctx.clearRect(0, 0, w, h);
+                mindTime += 0.016;
+                const labels = mindLabels[currentLang] || mindLabels.pt;
+                const pts = mindNodes.map(n => ({ ...n, px: n.x * w, py: n.y * h }));
+
+                mindEdges.forEach(([a, b], i) => {
+                    const n1 = pts[a];
+                    const n2 = pts[b];
+                    const pulse = 0.25 + 0.35 * Math.sin(mindTime * 1.8 + i * 0.7);
+                    mctx.beginPath();
+                    mctx.strokeStyle = `rgba(59, 130, 246, ${pulse})`;
+                    mctx.lineWidth = 1.5;
+                    mctx.moveTo(n1.px, n1.py);
+                    mctx.lineTo(n2.px, n2.py);
+                    mctx.stroke();
+
+                    const t = (Math.sin(mindTime * 2 + i) + 1) / 2;
+                    const dotX = n1.px + (n2.px - n1.px) * t;
+                    const dotY = n1.py + (n2.py - n1.py) * t;
+                    mctx.beginPath();
+                    mctx.fillStyle = 'rgba(147, 197, 253, 0.9)';
+                    mctx.arc(dotX, dotY, 3, 0, Math.PI * 2);
+                    mctx.fill();
+                });
+
+                pts.forEach((n) => {
+                    const glow = 16;
+                    const grd = mctx.createRadialGradient(n.px, n.py, 0, n.px, n.py, glow);
+                    grd.addColorStop(0, 'rgba(59, 130, 246, 0.25)');
+                    grd.addColorStop(1, 'transparent');
+                    mctx.fillStyle = grd;
+                    mctx.beginPath();
+                    mctx.arc(n.px, n.py, glow, 0, Math.PI * 2);
+                    mctx.fill();
+
+                    mctx.beginPath();
+                    mctx.fillStyle = '#1d4ed8';
+                    mctx.arc(n.px, n.py, n.r, 0, Math.PI * 2);
+                    mctx.fill();
+
+                    const label = labels[n.key];
+                    mctx.fillStyle = '#e5e7eb';
+                    mctx.font = `${label.length > 8 ? '9px' : '10px'} "JetBrains Mono", monospace`;
+                    mctx.textAlign = 'center';
+                    mctx.fillText(label, n.px, n.py + n.r + 16);
+                });
+
+                requestAnimationFrame(drawMind);
+            }
+
+            window.addEventListener('resize', resizeMind);
+            resizeMind();
+            drawMind();
+        }
+
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -818,9 +2128,39 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
+                    if (entry.target.id === 'hero-stats') {
+                        animateHeroCounters(entry.target);
+                    }
                 }
             });
         }, observerOptions);
+
+        function animateHeroCounters(container) {
+            if (container.dataset.animated === 'true') return;
+            container.dataset.animated = 'true';
+
+            container.querySelectorAll('.hero-stat__counter').forEach((el, i) => {
+                const target = parseFloat(el.dataset.target);
+                const decimals = parseInt(el.dataset.decimals || '0', 10);
+                const duration = 1400;
+                const delay = i * 120;
+                const start = performance.now() + delay;
+
+                function tick(now) {
+                    const elapsed = now - start;
+                    if (elapsed < 0) {
+                        requestAnimationFrame(tick);
+                        return;
+                    }
+                    const p = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    const value = target * eased;
+                    el.textContent = decimals > 0 ? value.toFixed(decimals) : Math.floor(value);
+                    if (p < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+            });
+        }
 
         document.querySelectorAll('.reveal').forEach(el => {
             observer.observe(el);
