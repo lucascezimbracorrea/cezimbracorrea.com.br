@@ -34,7 +34,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Outfit:wght@800&display=swap');
 
         html {
             scroll-snap-type: y mandatory;
@@ -335,6 +335,43 @@
             max-height: 5.5rem;
             max-width: 11rem;
             transform: scale(1.15);
+        }
+
+        .saas-visual__logo--iavenda {
+            background: #ffffff;
+            padding: 1.5rem 2rem;
+        }
+
+        .saas-visual__logo--iavenda svg {
+            width: 11rem;
+            height: auto;
+        }
+
+        .saas-visual__logo--comprovapix {
+            background: #0a0f0d;
+            padding: 1.5rem 2rem;
+        }
+
+        .comprovapix-wordmark {
+            display: inline-flex;
+            align-items: center;
+            font-size: 2.25rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            color: #ffffff;
+        }
+
+        .comprovapix-wordmark__accent {
+            display: inline-flex;
+            align-items: center;
+            color: #34d399;
+        }
+
+        .comprovapix-wordmark__accent svg {
+            height: 1em;
+            width: 0.78em;
+            margin-left: -0.02em;
+            transform: translateY(0.1em);
         }
 
         .landing-gold-gradient {
@@ -1153,40 +1190,77 @@
         </div>
     </section>
 
-    <!-- Dilifarma -->
-    <section id="product-dilifarma" class="snap-section timeline-section saas-panel saas-panel--reverse px-6 border-t border-white/5 bg-gray-900/20" data-timeline-pt="Dilifarma" data-timeline-en="Dilifarma">
+    <!-- IA Venda -->
+    <section id="product-iavenda" class="snap-section timeline-section saas-panel saas-panel--reverse px-6 border-t border-white/5 bg-gray-900/20" data-timeline-pt="IA Venda" data-timeline-en="IA Venda">
         <div class="max-w-7xl mx-auto w-full reveal">
             <div class="saas-grid grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                 <div class="saas-content lg:mr-auto w-full">
-                    <h3 class="text-3xl md:text-4xl font-extrabold mb-4">Dilifarma</h3>
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-4">IA Venda</h3>
                     <p class="text-lg text-gray-300 font-medium mb-4"
-                       data-pt="A farmácia online especializada em performance, emagrecimento e saúde — com app próprio, entrega rápida e atendimento personalizado."
-                       data-en="The online pharmacy specialized in performance, weight loss, and health — with its own app, fast delivery, and personalized service.">
-                       A farmácia online especializada em performance, emagrecimento e saúde — com app próprio, entrega rápida e atendimento personalizado.
+                       data-pt="A plataforma de vendas com IA que mantém sua operação vendendo 24 horas — em qualquer moeda."
+                       data-en="The AI-powered sales platform that keeps your business selling 24/7 — in any currency.">
+                       A plataforma de vendas com IA que mantém sua operação vendendo 24 horas — em qualquer moeda.
                     </p>
                     <p class="text-gray-400 leading-relaxed mb-6"
-                       data-pt="Catálogo completo de suplementos, anabolizantes e produtos para emagrecimento, com pedidos, pagamento e rastreio integrados. Agente de IA no WhatsApp orienta clientes e impulsiona as vendas."
-                       data-en="Complete catalog of supplements, anabolics, and weight loss products, with integrated orders, payment, and tracking. AI embedded in the admin panel to assist with operations management.">
-                       Catálogo completo de suplementos, anabolizantes e produtos para emagrecimento, com pedidos, pagamento e rastreio integrados. IA embarcada no painel administrativo para auxiliar a gestão da operação.
+                       data-pt="Loja online, estoque e ERP, preços multi-moeda e validação de comprovantes PIX em um só lugar. O vendedor com IA atende no WhatsApp, Instagram e TikTok, tira dúvidas, monta pedidos e envia o PIX — e passa para um humano quando precisa."
+                       data-en="Online store, inventory and ERP, multi-currency pricing, and PIX receipt validation in one place. The AI sales agent serves customers on WhatsApp, Instagram, and TikTok, answers questions, builds orders, and sends PIX payment details — handing off to a human when needed.">
+                       Loja online, estoque e ERP, preços multi-moeda e validação de comprovantes PIX em um só lugar. O vendedor com IA atende no WhatsApp, Instagram e TikTok, tira dúvidas, monta pedidos e envia o PIX — e passa para um humano quando precisa.
                     </p>
                     <ul class="space-y-2.5 mb-8 text-sm text-gray-300">
-                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i><span data-pt="App de loja com catálogo especializado e pagamento" data-en="Store app with specialized catalog and payment">App de loja com catálogo especializado e pagamento</span></li>
-                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i><span data-pt="Foco em performance, anabolizantes e emagrecimento" data-en="Focus on performance, anabolics, and weight loss">Foco em performance, anabolizantes e emagrecimento</span></li>
-                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i><span data-pt="Pedidos, entrega e rastreio integrados" data-en="Integrated orders, delivery, and tracking">Pedidos, entrega e rastreio integrados</span></li>
-                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i><span data-pt="IA integrada ao painel administrativo" data-en="AI integrated into the admin dashboard">IA integrada ao painel administrativo</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i><span data-pt="Loja online, estoque e ERP integrados" data-en="Integrated online store, inventory, and ERP">Loja online, estoque e ERP integrados</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i><span data-pt="Multi-moeda e Valida PIX para liberar pedidos" data-en="Multi-currency pricing and PIX validation to release orders">Multi-moeda e Valida PIX para liberar pedidos</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i><span data-pt="Vendedor com IA no WhatsApp, Instagram e TikTok" data-en="AI sales agent on WhatsApp, Instagram, and TikTok">Vendedor com IA no WhatsApp, Instagram e TikTok</span></li>
                     </ul>
-                    <a href="https://dilifarma.com" target="_blank" rel="noopener noreferrer" class="bg-green-700 hover:bg-green-600 text-white inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-all">
+                    <a href="https://iavenda.app/" target="_blank" rel="noopener noreferrer" class="bg-green-700 hover:bg-green-600 text-white inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-all">
                         <span data-pt="Conhecer a plataforma" data-en="Explore the platform">Conhecer a plataforma</span>
                         <i data-lucide="external-link" class="w-4 h-4"></i>
                     </a>
                 </div>
                 <div class="saas-visual">
-                    <div class="saas-visual__logo bg-white" style="padding: 1.5rem 2rem;">
-                        <img src="logo-dilifarma.png" alt="Dilifarma" width="280" height="130">
+                    <div class="saas-visual__logo saas-visual__logo--iavenda">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 34" width="176" height="60" role="img" aria-label="IA Venda"><text x="0" y="26" fill="#16A34A" font-family="Outfit, system-ui, sans-serif" font-style="italic" font-weight="800" font-size="26" letter-spacing="-0.06em">ia</text><g transform="translate(24 2)"><g fill="none" stroke="#16A34A" stroke-linecap="round" stroke-linejoin="round"><g transform="skewX(-12)"><path d="M1 3 L11 27" stroke-width="4.2"></path><path d="M11 27 L23 6" stroke-width="4.2"></path><path d="M19.5 3.5 L27 2.2 L24.5 7.5" stroke-width="2.6"></path></g></g></g><text x="40" y="26" fill="#16A34A" font-family="Outfit, system-ui, sans-serif" font-style="italic" font-weight="800" font-size="26" letter-spacing="-0.06em">enda</text></svg>
                     </div>
-                    <p class="mono text-sm text-gray-500">dilifarma.com</p>
+                    <p class="mono text-sm text-gray-500">iavenda.app</p>
                     <span class="inline-flex text-xs font-semibold uppercase tracking-wider text-green-400 bg-green-500/10 border border-green-500/20 px-3 py-1.5 rounded-full"
-                          data-pt="Performance & emagrecimento" data-en="Performance & weight loss">Performance & emagrecimento</span>
+                          data-pt="Varejo & vendas online" data-en="Retail & online sales">Varejo & vendas online</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ComprovaPix -->
+    <section id="product-comprovapix" class="snap-section timeline-section saas-panel px-6 border-t border-white/5" data-timeline-pt="ComprovaPix" data-timeline-en="ComprovaPix">
+        <div class="max-w-7xl mx-auto w-full reveal">
+            <div class="saas-grid grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="saas-visual">
+                    <div class="saas-visual__logo saas-visual__logo--comprovapix">
+                        <span class="comprovapix-wordmark" role="img" aria-label="ComprovaPix">Comprova<span class="comprovapix-wordmark__accent">Pi<svg viewBox="0 0 14 16" fill="none" aria-hidden="true"><path d="M1.4 8.6 5.2 12.8 12.6 2.6" stroke="currentColor" stroke-width="2.35" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+                    </div>
+                    <p class="mono text-sm text-gray-500">comprovapix.com</p>
+                    <span class="inline-flex text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full"
+                          data-pt="Anti-golpe no Pix" data-en="Pix fraud protection">Anti-golpe no Pix</span>
+                </div>
+                <div class="saas-content lg:ml-auto w-full">
+                    <h3 class="text-3xl md:text-4xl font-extrabold mb-4">ComprovaPix</h3>
+                    <p class="text-lg text-gray-300 font-medium mb-4"
+                       data-pt="A plataforma anti-golpe para quem vende no Pix: o pedido só é liberado quando o crédito cai na conta — não no print."
+                       data-en="The anti-fraud platform for businesses that sell via Pix: orders are released only when the money hits the account — not on a screenshot.">
+                       A plataforma anti-golpe para quem vende no Pix: o pedido só é liberado quando o crédito cai na conta — não no print.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed mb-6"
+                       data-pt="O cliente manda o comprovante pelo WhatsApp ou pelo painel e a IA lê valor, horário e identificador da transação. O sistema cruza com a conta bancária, com acesso apenas de leitura, e só dá sinal verde quando o dinheiro caiu. Pix agendado, editado ou de outra conta não passa."
+                       data-en="Customers send the receipt via WhatsApp or the dashboard, and AI reads the amount, time, and transaction ID. The system cross-checks it against the bank account, with read-only access, and gives the green light only when the money has landed. Scheduled, edited, or third-party Pix transfers don't get through.">
+                       O cliente manda o comprovante pelo WhatsApp ou pelo painel e a IA lê valor, horário e identificador da transação. O sistema cruza com a conta bancária, com acesso apenas de leitura, e só dá sinal verde quando o dinheiro caiu. Pix agendado, editado ou de outra conta não passa.
+                    </p>
+                    <ul class="space-y-2.5 mb-8 text-sm text-gray-300">
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i><span data-pt="Confirmação no crédito real do banco" data-en="Confirmation against the real bank credit">Confirmação no crédito real do banco</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i><span data-pt="Comprovantes por WhatsApp, upload ou lote" data-en="Receipts via WhatsApp, upload, or batch">Comprovantes por WhatsApp, upload ou lote</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i><span data-pt="Painel por loja e vendedor, sem compartilhar senhas" data-en="Dashboard by store and seller, no password sharing">Painel por loja e vendedor, sem compartilhar senhas</span></li>
+                    </ul>
+                    <a href="https://comprovapix.com/" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-500 text-white inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-bold text-sm transition-all">
+                        <span data-pt="Conhecer a plataforma" data-en="Explore the platform">Conhecer a plataforma</span>
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1599,7 +1673,8 @@
                         <li><a href="#product-aura" class="site-footer__link">AURA Aesthetic</a></li>
                         <li><a href="#product-noclique" class="site-footer__link">NoClique</a></li>
                         <li><a href="#product-audoria" class="site-footer__link">Audória</a></li>
-                        <li><a href="#product-dilifarma" class="site-footer__link">Dilifarma</a></li>
+                        <li><a href="#product-iavenda" class="site-footer__link">IA Venda</a></li>
+                        <li><a href="#product-comprovapix" class="site-footer__link">ComprovaPix</a></li>
                         <li><a href="#products-custom" class="site-footer__link" data-pt="Sob medida" data-en="Custom built">Sob medida</a></li>
                     </ul>
                 </div>
